@@ -35,19 +35,29 @@
         '<span class="masthead__sub">' + S.person.role + ' · ' + S.person.location + '</span>' +
       '</div>' +
       '<nav class="masthead__nav" aria-label="Contents">' +
-        '<a href="#evolution">3D</a>' +
-        '<a href="#work">Work</a>' +
-        '<a href="#patents">Patents</a>' +
-        '<a href="#skills">Skills</a>' +
+        '<a href="#about">About</a>' +
+        '<a href="#evolution">Work</a>' +
+        '<a href="#challenges">Challenges</a>' +
+        '<a href="#next">Next</a>' +
         '<a href="#resume">Résumé</a>' +
         '<a href="#contact">Contact</a>' +
       '</nav>' +
     '</div>';
 
-  /* ---- Lede ---- */
+  /* ---- About me (top of the page) ----
+     The operating-envelope line and its diagram used to open the page; they
+     now close "Challenges conquered", as the envelope those challenges held.
+     The position statement moves up here as the closing line of About. */
+  $("about").innerHTML =
+    '<div class="sect__label">About me</div>' +
+    '<div class="sect__body reveal">' +
+      S.about.map(function (t, i) { return '<p class="about__p' + (i ? '' : ' about__p--lead') + '">' + t + '</p>'; }).join('') +
+      '<blockquote class="position">' + S.position + '</blockquote>' +
+    '</div>';
+
   var env = S.person.envelope;
-  $("lede").innerHTML =
-    '<p class="lede__text">' + S.person.lede[0] + '<br>' + S.person.lede[1] + '</p>' +
+  var ledeHTML =
+    '<p class="lede__text">' + S.person.lede.join('<br>') + '</p>' +
     '<svg class="lede__envelope" viewBox="0 0 440 65" role="img" ' +
       'aria-label="Operating envelope: ' + env.low + ' to ' + env.high + '">' +
       '<line class="env-rule" x1="50" y1="32" x2="390" y2="32" stroke="#16181a" stroke-width="1"/>' +
@@ -64,23 +74,44 @@
       '<line class="env-fade" x1="390" y1="24" x2="390" y2="40" stroke="#cc2a1e" stroke-width="2.5"/>' +
     '</svg>';
 
+  /* ---- Challenges conquered ---- */
+  $("challenges").innerHTML =
+    '<div class="sect__label">Challenges conquered</div>' +
+    '<div class="sect__body reveal">' +
+      '<table class="chal-table"><tbody>' +
+        S.challenges.map(function (c, i) {
+          return '<tr><td class="chal-no">' + String(i + 1).padStart(2, '0') + '</td>' +
+            '<td class="chal-q">' + c.challenge + '</td><td class="chal-a">' + c.outcome + '</td></tr>';
+        }).join('') +
+      '</tbody></table>' +
+      '<div class="chal-envelope">' + ledeHTML + '</div>' +
+    '</div>';
+
+  /* ---- Working towards ---- */
+  $("next").innerHTML =
+    '<div class="sect__label">Working towards</div>' +
+    '<div class="sect__body reveal">' +
+      '<h2 class="next__title">' + S.next.title + '</h2>' +
+      S.next.lines.map(function (t) { return '<p class="next__p">' + t + '</p>'; }).join('') +
+    '</div>';
+
   /* ---- Evolution: the interactive 3D viewer ----
      Click-to-load: the viewer pulls three.js and the models (POC ~3 MB to
      start, Pilot ~41 MB when chosen), so nothing downloads until a visitor
      asks for it. The viewer itself lives at viewer/ and also opens full
      screen on its own. */
   $("evolution").innerHTML =
-    '<div class="sect__label">Evolution</div>' +
+    '<div class="sect__label">Work portfolio</div>' +
     '<div class="sect__body reveal">' +
       '<div class="evo" id="evo">' +
         '<div class="evo__poster">' +
-          '<div class="evo__kicker">FIG. 0 · Interactive 3D</div>' +
+          '<div class="evo__kicker">Interactive 3D · block view</div>' +
           '<div class="evo__title">TMS Evolution</div>' +
           '<div class="evo__steps"><span>POC</span><i>→</i><span>Prototype</span><i>→</i><span>Pilot</span></div>' +
           '<p class="evo__line">The battery-swap rack thermal systems I designed, from proof of concept to pilot. ' +
             'Rotate, explode, and highlight the coolant routing, chargers and BTMS + CTMS unit.</p>' +
           '<div class="evo__actions">' +
-            '<button class="evo__btn" id="evo-load" type="button">Load 3D viewer</button>' +
+            '<button class="evo__btn" id="evo-load" type="button">View work portfolio</button>' +
             '<a class="evo__btn evo__btn--ghost" href="viewer/" target="_blank" rel="noopener">Open full screen</a>' +
           '</div>' +
           '<div class="evo__note">Block view: design features hidden to keep the work confidential. ~3 MB to start.</div>' +
@@ -89,13 +120,14 @@
     '</div>';
   document.getElementById("evo-load").addEventListener("click", function () {
     var box = document.getElementById("evo");
-    box.innerHTML = '<iframe class="evo__frame" src="viewer/" title="TMS Evolution, interactive 3D viewer" ' +
+    box.innerHTML = '<iframe class="evo__frame" src="viewer/" title="Work portfolio: TMS evolution, interactive 3D" ' +
       'allow="fullscreen" loading="eager"></iframe>' +
       '<a class="evo__full" href="viewer/" target="_blank" rel="noopener">Open full screen ↗</a>';
   });
 
   /* ---- Work ---- */
   function figLinks(figs) {
+    if (!figs.length) return '—';
     return figs.map(function (f) {
       return '<a href="#fig-' + f.n + '" class="fig-ref">FIG. ' + f.n + '</a>';
     }).join(', ');
@@ -157,7 +189,7 @@
   }).join('');
 
   $("work").innerHTML =
-    '<div class="sect__label">Work</div>' +
+    '<div class="sect__label">Projects</div>' +
     '<div class="sect__intro">' +
       '<p class="sect__count">' + (S.projects.length + S.earlier.length) +
         ' projects · 2018–2025</p>' +
@@ -171,9 +203,6 @@
       '<table class="earlier-table"><tbody>' + earlierRows + '</tbody></table>' +
     '</div>';
 
-  /* ---- Position ---- */
-  $("position").innerHTML =
-    '<blockquote class="position reveal">' + S.position + '</blockquote>';
 
   /* ---- Experience ---- */
   var expRows = S.experience.map(function (x) {

@@ -883,3 +883,27 @@ img { max-width: 100%; display: block; }
 .evo__frame { display: block; width: 100%; height: min(82vh, 760px); border: 0; background: #0b0c0d; }
 .evo__full { display: block; padding: 8px 12px; font-family: var(--mono); font-size: 11px; text-align: right; }
 @media (max-width: 760px) { .evo__poster { padding: 24px 18px; } .evo__frame { height: 88vh; } }
+
+/* ---- About me / Challenges conquered / Working towards (2026-11-06) ---- */
+#about { padding-top: 104px; }
+.about__p { font-size: 17px; line-height: 1.6; max-width: 60ch; color: var(--ink-70); margin-top: 14px; }
+.about__p--lead { font-size: clamp(21px, 2.6vw, 27px); line-height: 1.35; color: var(--ink); margin-top: 0; max-width: 40ch; }
+#about .position { margin: 36px 0 0; }
+.chal-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.chal-table td { padding: 14px 12px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+.chal-table tr:first-child td { border-top: 1px solid var(--ink-20); }
+.chal-table tr:last-child td { border-bottom: 1px solid var(--ink-20); }
+.chal-no { font-family: var(--mono); color: var(--ink-45); width: 44px; }
+.chal-q { color: var(--ink); width: 48%; }
+.chal-a { color: var(--ink-70); }
+.chal-envelope { margin-top: 56px; }
+.chal-envelope .lede__text { font-size: clamp(19px, 2.4vw, 24px); }
+.chal-envelope .lede__envelope { margin-top: 28px; }
+.next__title { font-size: clamp(24px, 3.4vw, 36px); line-height: 1.1; font-weight: 500; max-width: 22ch; }
+.next__p { font-size: 16px; line-height: 1.6; max-width: 62ch; color: var(--ink-70); margin-top: 14px; }
+@media (max-width: 760px) {
+  #about { padding-top: 56px; }
+  .chal-table, .chal-table tbody, .chal-table tr, .chal-table td { display: block; width: auto; }
+  .chal-table tr { border-bottom: 1px solid var(--grid); padding: 10px 0; }
+  .chal-table td { border: 0 !important; padding: 2px 0; }
+}

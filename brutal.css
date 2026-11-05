@@ -196,3 +196,18 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .evo__btn--ghost { background: var(--paper); color: var(--ink); border-color: var(--ink); }
 .evo__note { color: var(--ink-45); }
 .evo__full { color: var(--acc); border-top: 2px solid var(--ink); }
+
+/* ---- About / Challenges / Next ---- */
+.about__p--lead { font-weight: 800; text-transform: uppercase; letter-spacing: -.01em; line-height: 1.2; }
+#about .position { text-transform: none; font-weight: 500; font-size: clamp(18px, 2vw, 21px); line-height: 1.45; color: var(--ink); }
+.chal-table td { border-color: var(--grid); }
+.chal-table tr:first-child td { border-top: 2px solid var(--ink); }
+.chal-table tr:last-child td { border-bottom: 2px solid var(--ink); }
+.chal-no { color: var(--acc); font-weight: 600; }
+.chal-q { font-weight: 800; text-transform: uppercase; font-size: 13px; letter-spacing: .03em; line-height: 1.4; }
+.chal-a { color: var(--ink-70); }
+.chal-table tbody tr { transition: background .12s; }
+.chal-table tbody tr:hover { background: rgba(228, 255, 26, .05); }
+.chal-envelope { border: 2px solid var(--ink); padding: 26px 26px 18px; box-shadow: 6px 6px 0 var(--ink-20); }
+.next__title { font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; }
+.next__title::after { content: ""; display: block; width: 64px; height: 6px; background: var(--acc); margin-top: 14px; }
