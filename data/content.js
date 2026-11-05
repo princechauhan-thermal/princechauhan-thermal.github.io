@@ -5,7 +5,8 @@ window.SITE = {
     location: "Bengaluru",
     email: "princechauhan92652@gmail.com",
     linkedin: "https://www.linkedin.com/in/prince-chauhan-470031166/",
-    resume: "assets/Prince_Chauhan_Resume.pdf",
+    resume: "cv/Prince_Chauhan_CV.pdf",   // printed from cv/ (the web résumé)
+    cv: "cv/",
     lede: [
       "Liquid-cooled battery and charger systems holding multi-pack platforms in their window from −10 to 55 °C, at supercharge rates."
     ],

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prince Chauhan — Thermal Engineer · Résumé</title>
+<meta name="description" content="Résumé of Prince Chauhan, thermal engineer: battery and charger thermal management for 20–110 kWh swap and fast-charging stations, with interactive 3D of the work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* One source, two outputs: on screen it wears the portfolio's dark
+     brutalist skin; printed (Ctrl+P / the PDF button) it becomes a plain
+     black-on-white A4 résumé with live links and a QR code to the 3D work. */
+  :root { --bg:#0b0c0d; --panel:#101214; --ink:#f2f2ec; --ink-70:#b8bbbe; --ink-45:#7a7f85; --ink-20:#33373b;
+          --acc:#e4ff1a; --sans:"Archivo","Helvetica Neue",Arial,sans-serif; --mono:"JetBrains Mono",Consolas,monospace; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { background:var(--bg); }
+  body { color:var(--ink); font:15px/1.55 var(--sans); }
+  a { color:inherit; text-decoration-color:var(--acc); text-underline-offset:3px; }
+  .bar { position:sticky; top:0; z-index:5; display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;
+         padding:12px 24px; background:var(--bg); border-bottom:2px solid var(--ink); }
+  .bar__home { font:900 14px var(--sans); text-transform:uppercase; text-decoration:none; }
+  .bar__actions { display:flex; gap:10px; flex-wrap:wrap; }
+  .btn { font:800 11.5px var(--sans); text-transform:uppercase; letter-spacing:.04em; color:var(--ink); background:var(--bg);
+         border:2px solid var(--ink); box-shadow:3px 3px 0 var(--ink); padding:7px 12px; cursor:pointer; text-decoration:none;
+         transition:transform .08s ease-out, box-shadow .08s ease-out, background .12s, color .12s; }
+  .btn:hover { background:var(--acc); color:#000; border-color:var(--acc); }
+  .btn:active { transform:translate(3px,3px); box-shadow:0 0 0 var(--ink); }
+  .btn--acc { background:var(--acc); color:#000; border-color:var(--acc); }
+
+  .sheet { max-width:860px; margin:0 auto; padding:44px 24px 80px; }
+  header.cv-head { display:grid; grid-template-columns:1fr auto; gap:20px; align-items:start; padding-bottom:22px; border-bottom:2px solid var(--ink); }
+  h1 { font:900 clamp(32px,5vw,46px)/1 var(--sans); text-transform:uppercase; letter-spacing:-.02em; }
+  .role { font:600 13px var(--mono); color:var(--acc); margin-top:8px; letter-spacing:.04em; }
+  .contact { margin-top:12px; font:12.5px/1.7 var(--mono); color:var(--ink-70); }
+  .contact a { color:var(--ink); }
+  .qr { width:92px; text-align:center; font:9.5px/1.3 var(--mono); color:var(--ink-45); text-decoration:none; }
+  .qr img { width:92px; height:92px; display:block; background:#fff; padding:6px; border:2px solid var(--ink); margin-bottom:6px; }
+  .print-only { display:none; }
+  .embedded .bar { display:none; }
+  .embedded .sheet { padding-top:28px; }
+
+  section { margin-top:28px; }
+  h2 { display:flex; align-items:center; gap:8px; font:600 11px var(--mono); letter-spacing:.14em; text-transform:uppercase;
+       color:var(--ink-45); margin-bottom:12px; }
+  h2::before { content:""; width:8px; height:8px; background:var(--acc); }
+  .summary { font-size:16.5px; line-height:1.55; color:var(--ink); max-width:66ch; }
+  .job { border-top:2px solid var(--ink); padding-top:14px; margin-top:14px; }
+  .job:first-of-type { border-top:0; padding-top:0; margin-top:0; }
+  .job__head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 16px; align-items:baseline; }
+  .job__title { font:900 16px var(--sans); text-transform:uppercase; letter-spacing:-.005em; }
+  .job__when { font:12px var(--mono); color:var(--acc); }
+  .job__where { font:12px var(--mono); color:var(--ink-45); margin-top:2px; }
+  h3 { font:800 11.5px var(--sans); text-transform:uppercase; letter-spacing:.06em; color:var(--ink); margin:14px 0 6px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  ul { list-style:none; }
+  li { position:relative; padding-left:16px; margin:5px 0; color:var(--ink-70); }
+  li::before { content:""; position:absolute; left:0; top:.62em; width:6px; height:6px; background:var(--ink-45); }
+  li b { color:var(--ink); font-weight:700; }
+  .v3d { font:600 10px var(--mono); letter-spacing:.06em; text-transform:uppercase; color:#000; background:var(--acc);
+         padding:2px 7px; text-decoration:none; white-space:nowrap; }
+  .v3d:hover { outline:2px solid var(--ink); }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:6px 28px; }
+  .kv { display:grid; grid-template-columns:150px 1fr; gap:4px 16px; font-size:14px; }
+  .kv dt { font:600 11px/1.9 var(--mono); text-transform:uppercase; letter-spacing:.06em; color:var(--ink-45); }
+  .kv dd { color:var(--ink-70); }
+  .note { font:11.5px var(--mono); color:var(--ink-45); margin-top:6px; }
+  @media (max-width:640px) { header.cv-head { grid-template-columns:1fr; } .qr { display:none; } .grid2, .kv { grid-template-columns:1fr; } }
+
+  /* ---- Print: the PDF ---- */
+  @page { size:A4; margin:13mm 14mm; }
+  @media print {
+    :root { --ink:#111; --ink-70:#2a2a2a; --ink-45:#666; --acc:#111; }
+    html, body { background:#fff; }
+    body { font-size:9.6pt; line-height:1.38; }
+    .bar, .screen-only { display:none !important; }
+    .print-only { display:inline; }
+    .sheet { max-width:none; padding:0; }
+    h1 { font-size:22pt; } .role { font-size:9pt; color:#111; }
+    .contact { font-size:8.4pt; margin-top:6px; }
+    header.cv-head { padding-bottom:10px; border-bottom:1.5pt solid #111; }
+    .qr img { width:68px; height:68px; padding:0; border:0; } .qr { width:72px; font-size:7pt; color:#444; }
+    section { margin-top:12px; break-inside:avoid-page; }
+    h2 { font-size:8pt; margin-bottom:6px; color:#111; } h2::before { background:#111; width:6px; height:6px; }
+    .summary { font-size:10pt; }
+    .job { border-top:1pt solid #111; padding-top:8px; margin-top:8px; }
+    .job__title { font-size:10.5pt; } .job__when, .job__where { font-size:8.4pt; color:#333; }
+    h3 { font-size:8.4pt; margin:8px 0 3px; break-after:avoid; }
+    li { margin:2px 0; padding-left:11px; color:#222; } li::before { width:4px; height:4px; background:#555; top:.6em; }
+    li { break-inside:avoid; }
+    .v3d { background:none; color:#111; border:0.8pt solid #111; padding:0 4px; font-size:6.8pt; }
+    .kv { font-size:9pt; grid-template-columns:120px 1fr; } .kv dt { font-size:7.6pt; line-height:1.7; }
+    a { text-decoration:underline; text-decoration-color:#999; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <a class="bar__home" href="../">← Portfolio</a>
+  <div class="bar__actions">
+    <a class="btn" href="../#evolution">View work portfolio</a>
+    <a class="btn btn--acc" href="Prince_Chauhan_CV.pdf" download>Download PDF</a>
+    <button class="btn" type="button" onclick="window.print()">Print</button>
+  </div>
+</div>
+
+<main class="sheet">
+  <header class="cv-head">
+    <div>
+      <h1>Prince Chauhan</h1>
+      <div class="role">Senior Thermal Engineer · Battery &amp; charger thermal management</div>
+      <div class="contact">
+        Bengaluru, India ·
+        <a href="mailto:princechauhan92652@gmail.com">princechauhan92652@gmail.com</a>
+        <!-- Phone only in the printed/PDF copy: kept out of the page itself so
+             it is not trivially scraped. Prince's PDF already carries it. -->
+        <span class="print-only"> · +91-9265212936</span><br>
+        <a href="https://www.linkedin.com/in/prince-chauhan-470031166/">linkedin.com/in/prince-chauhan-470031166</a> ·
+        <a href="https://princechauhan-thermal.github.io/">princechauhan-thermal.github.io</a>
+      </div>
+    </div>
+    <a class="qr" href="https://princechauhan-thermal.github.io/#evolution" title="Interactive 3D of the work">
+      <img src="../assets/media/qr-portfolio.svg" alt="QR code to the interactive 3D work portfolio">
+      Scan: the work in 3D
+    </a>
+  </header>
+
+  <section>
+    <h2>Summary</h2>
+    <p class="summary">Thermal engineer with 3+ years designing liquid- and air-cooled thermal management for battery-swap
+      and fast-charging stations from 20 to 110 kWh, holding packs inside a 25–35 °C window at ambient temperatures up
+      to 55 °C. Work runs the full path: first-principles heat-load estimation, coolant-loop sizing, radiator and chiller
+      selection against ΔT budgets, chamber and field validation, and the control logic that runs it. Four patent
+      applications filed. Working towards intelligent, data-driven thermal systems and spacecraft thermal control.</p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <div class="job">
+      <div class="job__head"><div class="job__title">Senior Thermal Engineer · SUN Mobility</div><div class="job__when">2023 – present</div></div>
+      <div class="job__where">Electric Vehicles Dept · Bengaluru</div>
+
+      <h3>Supercharge architecture <a class="v3d" href="https://princechauhan-thermal.github.io/viewer/?v=poc">View in 3D · POC</a></h3>
+      <ul>
+        <li>Architected and validated the coolant system for a supercharge demonstrator: <b>650 kg packs held at 25–35 °C</b>
+          through 110 kWh supercharging at 50 °C ambient, <b>100+ consecutive swaps, no thermal fault</b>.</li>
+        <li>Led thermal validation at OEM factories: test-setup design, data-acquisition protocol, reporting, and training
+          factory engineers on the procedure.</li>
+      </ul>
+
+      <h3>Liquid-cooled charger &amp; battery <a class="v3d" href="https://princechauhan-thermal.github.io/viewer/?v=prototype">View in 3D · Prototype</a></h3>
+      <ul>
+        <li>Defined the BTMS/CTMS thermal architecture for 20–110 kWh platforms to 55 °C ambient: heat-load estimation by
+          energy balance and loss modelling, coolant-flow sizing, radiator and chiller selection against ΔT limits.</li>
+        <li>Qualified supplied hardware against datasheet in the chamber, finding a chiller short of its rating as ambient
+          rose, and carried the shortfall into the sizing margin.</li>
+        <li>Worked with battery manufacturers on iterative cooling design, cutting charging thermal resistance by <b>18%</b>;
+          optimised radiator sizing and flow distribution under peak charging loads (1.6C–3C).</li>
+        <li>Designed a redundant-pump liquid loop for the charger rectifier stage; testing showed derating above 50 °C beyond
+          datasheet, fed back to the supplier.</li>
+      </ul>
+
+      <h3>Integrated BTMS + CTMS · pilot <a class="v3d" href="https://princechauhan-thermal.github.io/viewer/?v=pilot">View in 3D · Pilot</a></h3>
+      <ul>
+        <li>Brought the BTMS and CTMS into a single enclosed, serviceable unit on the 110 kWh series-ready pilot rack.</li>
+        <li>Authored the System of Requirements (SOR) defining BTMS/CTMS state machines, flow diagrams and alert logic,
+          adopted as the governing control logic by the embedded team.</li>
+        <li>Built an ECU–station controller simulator and over-charge cooling safety logic to stress-test the control
+          strategy across the temperature envelope <b>before hardware</b>.</li>
+      </ul>
+
+      <h3>Air-cooled chargers</h3>
+      <ul>
+        <li>Air-cooled charging station, taken from proof of concept to station design: <b>Best Team Award</b>
+          (Air-cool station &amp; POC team, Q3 FY2025–26).</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job__head"><div class="job__title">Simulation Engineer · GTU Motorsports</div><div class="job__when">2018 – 2022</div></div>
+      <div class="job__where">Formula Bharat · Gujarat</div>
+      <ul>
+        <li>Led chassis optimisation with CAD and FEA, cutting vehicle weight <b>15%</b> and contributing to a national win
+          against 80+ teams including IITs and NITs (2019).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Patents &amp; recognition</h2>
+    <ul>
+      <li><b>IN 202441065103</b> · Thermal management of chargers · filed</li>
+      <li><b>IN 202441065106</b> · Thermal management of energy storage devices · filed</li>
+      <li>Two further applications filed (2025): dynamic compressor-speed control for battery thermal systems, and
+        reinforcement-learning-based liquid cooling control.</li>
+      <li><b>InvenZone Award 2025</b> (IP contribution) · <b>Best Team Award</b>, SUN Mobility (Q3 FY2025–26)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <dl class="kv">
+      <dt>Thermal design</dt><dd>BTMS · CTMS · heat-load estimation · coolant-loop sizing · radiator/chiller selection · thermal-runaway prevention · multi-scale modelling (cell / pack / station)</dd>
+      <dt>Simulation</dt><dd>ANSYS Fluent (CFD) · Siemens NX Space Systems Thermal · Flow Simulation · SolidWorks · PTC Creo · FEA</dd>
+      <dt>Test &amp; validation</dt><dd>Chamber testing (−10 to 60 °C) · RTD / thermocouple calibration · IR thermography · DAQ · DOE · RCA · supplier qualification</dd>
+      <dt>Control &amp; embedded</dt><dd>Thermal state machines · ECU simulation · alert &amp; safety logic · CAN 2.0 · real-time monitoring</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Spacecraft thermal</h2>
+    <ul>
+      <li>Satellite thermal-control design study (self-directed): radiator sizing against a hot-case load, battery
+        cold-case survival through eclipse with heater sizing, and an optical-bench gradient analysis.</li>
+      <li>Eight-part public technical series on satellite thermal architecture, with ten original diagrams.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Education &amp; certifications</h2>
+    <dl class="kv">
+      <dt>2022</dt><dd>B.E., Automobile Engineering · LJIET, Gujarat (heat transfer, thermodynamics, fluid mechanics)</dd>
+      <dt>Certifications</dt><dd>Astronautics &amp; Human Spaceflight (MITx) · Electric Vehicle Technology (DelftX) · Solar Energy Systems (DelftX) · Machine Learning (Coursera) · IBM Data Science (Coursera)</dd>
+      <dt>Earlier</dt><dd>3 kW solar-tree system (2022–23): ~50% cost and ~80% footprint vs a fixed array</dd>
+    </dl>
+    <p class="note screen-only">Every "View in 3D" link opens the matching stage of the interactive viewer. Block view: design features hidden to keep the work confidential.</p>
+  </section>
+</main>
+<script>
+  // Embedded in the portfolio's Résumé section: hide this page's own bar
+  // (the portfolio already has one) and open links in the full window, not
+  // inside the frame.
+  if (window.top !== window.self) {
+    document.documentElement.classList.add("embedded");
+    document.querySelectorAll("a[href]").forEach(function (a) { a.target = "_top"; });
+  }
+</script>
+</body>
+</html>

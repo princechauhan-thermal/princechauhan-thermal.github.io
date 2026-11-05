@@ -925,3 +925,5 @@ img { max-width: 100%; display: block; }
 @media (max-width: 1180px) { .coolant__tip span { display: none; } }   /* no gutter for the readout */
 @media (max-width: 760px) { .coolant { left: 6px; width: 3px; top: 40px; } .coolant__tip { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; } }
 @media (prefers-reduced-motion: reduce) { .coolant__fill::after { animation: none; } }
+/* The web résumé in its frame: a page, not an A4 sheet, so a fixed tall frame. */
+.resume__frame--web { aspect-ratio: auto; height: min(88vh, 900px); max-height: none; background: #0b0c0d; }

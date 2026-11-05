@@ -281,12 +281,14 @@
   $("resume").innerHTML =
     '<div class="sect__label">Résumé</div>' +
     '<div class="sect__body reveal">' +
+      // The web résumé (cv/) is the source; the PDF is printed from it, so the
+      // two can never disagree. Recruiters read the page; the PDF is for ATS.
       '<div class="resume__bar">' +
-        '<a class="resume__btn" href="' + S.person.resume + '" download>Download PDF</a>' +
-        '<a class="resume__btn resume__btn--ghost" href="' + S.person.resume + '" target="_blank" rel="noopener">Open in new tab</a>' +
+        '<a class="resume__btn" href="' + S.person.cv + '">Open web résumé</a>' +
+        '<a class="resume__btn resume__btn--ghost" href="' + S.person.resume + '" download>Download PDF</a>' +
       '</div>' +
-      '<div class="resume__frame">' +
-        '<iframe src="' + S.person.resume + '#view=FitH&toolbar=0" title="Prince Chauhan résumé" loading="lazy"></iframe>' +
+      '<div class="resume__frame resume__frame--web">' +
+        '<iframe src="' + S.person.cv + '" title="Prince Chauhan résumé" loading="lazy"></iframe>' +
       '</div>' +
     '</div>';
 

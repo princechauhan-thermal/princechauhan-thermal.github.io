@@ -511,7 +511,11 @@ document.getElementById("reset").onclick = () => {
   lastInput = performance.now(); controls.autoRotate = false; frame(current);
 };
 function err(e) { status.style.display = "flex"; status.innerHTML = "<span>Could not load model: " + e.message + "</span>"; }
-viewsReady.then(() => show(VERSIONS[0])).catch(err);
+// ?v=poc|prototype|pilot opens straight on that stage: the web résumé's
+// "View in 3D" links land on the version the line is about.
+const want = new URLSearchParams(location.search).get("v");
+const first = VERSIONS.find(v => v.id === want || v.name.toLowerCase() === (want || "").toLowerCase()) || VERSIONS[0];
+viewsReady.then(() => show(first)).catch(err);
 
 // ---------------------------------------------------------------- loop
 const clock = new THREE.Clock();
