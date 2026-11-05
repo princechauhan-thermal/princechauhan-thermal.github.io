@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TMS Evolution — Prince Chauhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Dark brutalist: near-black ground, 2px white rules, square corners, hard
+     offset shadows, one acid accent. Category colours are the only other hues. */
+  :root { --bg:#0b0c0d; --panel:#101214; --ink:#f2f2ec; --ink-70:#b8bbbe; --ink-45:#7a7f85; --ink-20:#33373b;
+          --acc:#e4ff1a; --cold:#3d7ff0; --hot:#e8503a; --cool:#22b39c; --bat:#8c6fc4; --struct:#9aa0a6;
+          --mono:"JetBrains Mono", ui-monospace, Consolas, monospace; --sans:"Archivo", "Helvetica Neue", Arial, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font: 14px/1.45 var(--sans); }
+  .wrap { display:grid; grid-template-columns: 320px 1fr; height:100vh; }
+  aside { background:var(--panel); border-right:2px solid var(--ink); padding:22px 20px; overflow:auto; }
+  h1 { font: 900 22px/1 var(--sans); letter-spacing:-.01em; text-transform:uppercase; margin:0 0 8px; }
+  h1 span { background:var(--acc); color:#000; padding:0 4px; }
+  .sub { color:var(--ink-45); font:11px/1.5 var(--mono); margin-bottom:6px; }
+  .lbl { font:600 10.5px var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--ink-45);
+         margin:22px 0 10px; display:flex; align-items:center; gap:8px; }
+  .lbl::before { content:""; width:8px; height:8px; background:var(--acc); }
+
+  /* Buttons: hard shadow that collapses on press, like a physical key. */
+  .btn { font:800 12px var(--sans); text-transform:uppercase; letter-spacing:.04em; color:var(--ink);
+         background:var(--bg); border:2px solid var(--ink); box-shadow:4px 4px 0 var(--ink); cursor:pointer;
+         transition: transform .08s ease-out, box-shadow .08s ease-out, background .12s, color .12s; }
+  .btn:hover { transform:translate(-1px,-1px); box-shadow:5px 5px 0 var(--ink); }
+  .btn:active { transform:translate(4px,4px); box-shadow:0 0 0 var(--ink); }
+  .btn:focus-visible { outline:2px solid var(--acc); outline-offset:3px; }
+  .timeline { display:grid; grid-template-columns:.8fr 1.3fr .9fr; gap:9px; padding-right:4px; }   /* "Prototype" is the long one */
+  .timeline .btn { padding:10px 5px 9px; min-width:0; text-align:left; font-size:11px; letter-spacing:0; overflow:hidden; text-overflow:ellipsis; }
+  .timeline .btn small { display:block; font:400 9.5px var(--mono); text-transform:none; letter-spacing:0; color:var(--ink-45); margin-top:3px; }
+  .timeline .btn.on { background:var(--acc); color:#000; border-color:var(--acc); box-shadow:4px 4px 0 var(--ink); }
+  .timeline .btn.on small { color:#222; }
+  .timeline .btn.pending { color:var(--ink-45); border-style:dashed; box-shadow:none; cursor:default; transform:none; }
+
+  .story { min-height:210px; }
+  .story p { margin:8px 0; color:var(--ink-70); }
+  .story b { color:var(--ink); font-weight:800; text-transform:uppercase; font-size:11.5px; letter-spacing:.06em; }
+  .story.swap > * { animation: rise .45s cubic-bezier(.2,.8,.2,1) both; }
+  .story.swap > *:nth-child(2) { animation-delay:.05s } .story.swap > *:nth-child(3) { animation-delay:.1s } .story.swap > *:nth-child(4) { animation-delay:.15s }
+  @keyframes rise { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:none } }
+
+  /* SHOW rows: a whole-row toggle; the swatch fills when the group is lit. */
+  .row { display:flex; align-items:center; gap:10px; margin:6px 0; padding:7px 9px; cursor:pointer;
+         border:2px solid var(--ink-20); transition: border-color .12s, background .12s, transform .08s; user-select:none; }
+  .row:hover { border-color:var(--ink); }
+  .row:active { transform:translate(2px,2px); }
+  .row input { position:absolute; opacity:0; pointer-events:none; }
+  .sw { width:14px; height:14px; flex:none; border:2px solid; background:transparent; transition: background .12s; }
+  .row:has(input:checked) { border-color:var(--acc); background:rgba(228,255,26,.07); }
+  .row:has(input:checked) .sw { background:currentColor; }
+  .row .t { color:var(--ink); }
+  .toggle .sw { color:var(--acc); }
+  .row.off { opacity:.35; cursor:not-allowed; border-style:dashed; }
+  .row.off:hover { border-color:var(--ink-20); } .row.off:active { transform:none; }
+  input[type=range] { width:100%; accent-color:var(--acc); margin:4px 0 10px; }
+  .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
+  .actions .btn { padding:8px 12px; }
+
+  main { position:relative; overflow:hidden; background:var(--bg); }
+  canvas { display:block; }
+  .hud { position:absolute; left:22px; top:18px; pointer-events:none; z-index:2; }
+  .hud-name { font:900 clamp(30px,4.2vw,54px)/.95 var(--sans); text-transform:uppercase; letter-spacing:-.02em; }
+  .hud-cap { font:600 12px var(--mono); color:var(--acc); margin-top:6px; letter-spacing:.06em; }
+  .hud.in .hud-name, .hud.in .hud-cap { animation: wipe .55s cubic-bezier(.2,.8,.2,1) both; }
+  .hud.in .hud-cap { animation-delay:.08s; }
+  @keyframes wipe { from { clip-path: inset(0 100% 0 0); transform:translateX(-10px) } to { clip-path: inset(0 0 0 0); transform:none } }
+  #status { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:3; }
+  #status span { background:var(--bg); border:2px solid var(--acc); box-shadow:4px 4px 0 var(--acc);
+                 padding:10px 14px; font:12px var(--mono); color:var(--ink); }
+  .tag { background:#0b0c0d; border:2px solid var(--cool); box-shadow:3px 3px 0 var(--cool); color:var(--ink);
+         padding:5px 10px; font:900 13px var(--sans); letter-spacing:.06em; white-space:nowrap; }
+  .disclaimer { margin:14px 0 4px; padding:9px 11px; border:2px solid var(--acc); font:11px/1.5 var(--mono); color:var(--ink-70); }
+  .disclaimer b { display:block; color:var(--acc); text-transform:uppercase; letter-spacing:.12em; font-size:10px; margin-bottom:3px; }
+  .stamp { position:absolute; right:22px; bottom:34px; z-index:2; pointer-events:none; padding:4px 8px;
+           border:2px solid var(--acc); color:var(--acc); font:600 10px var(--mono); letter-spacing:.1em; }
+  .note { position:absolute; left:22px; bottom:14px; font:10.5px var(--mono); color:var(--ink-45); letter-spacing:.04em; z-index:2; }
+  .hint { position:absolute; right:22px; top:22px; font:10.5px var(--mono); color:var(--ink-45); z-index:2; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
+  /* Embedded in the portfolio the page is often 600-900 px wide: keep the
+     side-by-side layout as long as it fits, and when it must stack, put the
+     3D view FIRST so a visitor lands on the model, not on text. */
+  @media (max-width: 960px) { .wrap { grid-template-columns: 268px 1fr; } aside { padding:18px 16px; } }
+  @media (max-width: 640px) { .wrap { grid-template-columns:1fr; grid-template-rows:64vh auto; height:auto; }
+                              main { order:-1; min-height:64vh; }
+                              aside { border-right:0; border-top:2px solid var(--ink); } .story { min-height:0 } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside>
+    <h1>TMS <span>Evolution</span></h1>
+    <div class="sub">Battery-swap station rack cooling<br>drag to rotate · scroll to zoom</div>
+    <div class="disclaimer"><b>Disclaimer</b> This is a block view only. Design features have been hidden to keep the work confidential.</div>
+
+    <div class="lbl">Version</div>
+    <div class="timeline" id="timeline"></div>
+
+    <div class="story" id="story"></div>
+
+    <div class="lbl">Show · click to highlight</div>
+    <label class="row"><input type="checkbox" data-cat="plumbing"><span class="sw" style="color:var(--cold)"></span><span class="t">Coolant routing</span></label>
+    <label class="row"><input type="checkbox" data-cat="heatload"><span class="sw" style="color:var(--hot)"></span><span class="t">Chargers (heat load)</span></label>
+    <label class="row"><input type="checkbox" data-cat="thermal"><span class="sw" style="color:var(--cool)"></span><span class="t">TMS: BTMS + CTMS cooling unit</span></label>
+    <label class="row"><input type="checkbox" data-cat="battery"><span class="sw" style="color:var(--bat)"></span><span class="t">Battery packs</span></label>
+    <label class="row"><input type="checkbox" data-cat="structure"><span class="sw" style="color:var(--struct)"></span><span class="t">Structure</span></label>
+    <label class="row toggle"><input type="checkbox" id="xray"><span class="sw"></span><span class="t">Ghost everything</span></label>
+
+    <div class="lbl">Exploded view</div>
+    <input type="range" id="explode" min="0" max="100" value="0">
+    <div class="actions">
+      <button class="btn" id="reset">Reset view</button>
+    </div>
+  </aside>
+  <main id="stage">
+    <div class="hud" id="hud"><div class="hud-name" id="hudName"></div><div class="hud-cap" id="hudCap"></div></div>
+    <div id="status"><span>Loading model…</span></div>
+    <div class="note" id="note">drag to rotate · scroll to zoom</div>
+    <div class="hint">idle → turntable</div>
+    <div class="stamp">BLOCK VIEW · FEATURES HIDDEN · CONFIDENTIAL</div>
+  </main>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
+
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const VERSIONS = [
+  { id: "poc", name: "POC", cap: "V1 · 90 kWh", roll: -90, packs: true, plain: ["electrical"], explodeGhost: { plumbing: 0 },
+    story: ["<b>Problem:</b> Packs and liquid-cooled chargers shared one rack, and both had to stay in their thermal window at peak-summer ambient.", "<b>Change:</b> First integrated BTMS + CTMS: a roof-mounted radiator, fan and pump unit feeding every charger and pack through one hose harness.", "<b>Result:</b> Proved the architecture on the Prawaas demonstrator: 100+ swaps, zero thermal faults."] },
+  { id: "prototype", name: "Prototype", cap: "V2 · 100 kWh", roll: 180, packs: true, plain: ["electrical"], explodeGhost: { plumbing: 0 },
+    story: ["<b>Problem:</b> The POC loop was sized from supplier ratings, and the supplied chiller measured well under its rated capacity.", "<b>Change:</b> Re-sized the loop from heat-load first principles; dedicated BTMS unit beside the radiator on the top deck.", "<b>Result:</b> ~18% cut in thermal resistance."] },
+  { id: "pilot", name: "Pilot", cap: "V3 · 110 kWh series", flip: true, plain: ["electrical"], axis: [0, 0, 1],
+    // Exploded, the hose routing is laid bare: it fades out and is hidden.
+    explodeGhost: { plumbing: 0 },
+    story: ["<b>Problem:</b> Prototype hardware spread the BTMS and CTMS across the rack; the pilot build needed one enclosed, serviceable unit.", "<b>Change:</b> Integrated BTMS + CTMS in a single top-mounted box, run by a four-mode control scheme verified on an ECU simulator before hardware.", "<b>Result:</b> Series-ready pilot design; the architecture behind two filed patents on India's first automated multi-pack TMS for a swapping station."] },
+];
+VERSIONS.forEach(v => v.file = `../assets/models/${v.id}.glb`);
+
+
+// Slightly brighter than on the light page so they hold up on near-black.
+const COLORS = { plumbing: 0x3d7ff0, heatload: 0xe8503a, thermal: 0x22b39c, battery: 0x8c6fc4, interface: 0x8fa3b8, electrical: 0xc98a12, structure: 0x8d9399 };
+
+// Categories come from tools/cad_categorise.py (<model>.cats.json, one per
+// GLB node in order). Done offline because it needs the whole assembly
+// path, and so the rules can be tested without a browser.
+const stage = document.getElementById("stage"), status = document.getElementById("status");
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));   // 2x on a 4K panel quadruples fill cost for little gain
+stage.appendChild(renderer.domElement);
+// HTML labels pinned to 3D points (the BTMS & CTMS tag on the TMS box).
+const labels = new CSS2DRenderer();
+Object.assign(labels.domElement.style, { position: "absolute", inset: "0", pointerEvents: "none" });
+stage.appendChild(labels.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x0b0c0d);
+const camera = new THREE.PerspectiveCamera(40, 1, 0.01, 200);
+const controls = new OrbitControls(camera, renderer.domElement); controls.enableDamping = true;
+// Orbit like a turntable: never under the floor or over the top, where
+// OrbitControls flips and the drag direction seems to reverse.
+controls.minPolarAngle = .15; controls.maxPolarAngle = Math.PI / 2 + .1;
+controls.screenSpacePanning = true; controls.rotateSpeed = .7; controls.autoRotateSpeed = .55;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x1d2024, 1.45));
+const sun = new THREE.DirectionalLight(0xffffff, 1.7); sun.position.set(3, 6, 4); scene.add(sun);
+// Fill from the opposite side, so orbiting round the back never leaves the
+// model as a black silhouette (worse on a dark ground).
+const fill = new THREE.DirectionalLight(0xbfd4ff, .75); fill.position.set(-4, -1, -3); scene.add(fill);
+
+function resize() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h); labels.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+addEventListener("resize", resize); resize();
+
+const loader = new GLTFLoader(), cache = {};
+// Revalidate model files every load: a rebuilt GLB keeps its name, and the
+// browser otherwise served the previous model under the new label.
+loader.setRequestHeader({ "Cache-Control": "no-cache" });
+let current = null, parts = [], center = new THREE.Vector3(), currentV = null;
+
+// ONE material per category, shared by every part in it. A material per
+// part (1,700+) made every frame sort and switch state 1,700 times.
+const mat = (c, extra = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: .6, metalness: .12, flatShading: true, ...extra });
+const DIM = new THREE.Color(0x2c3034);          // what un-highlighted groups fade toward
+const MATS = Object.fromEntries(Object.entries(COLORS).map(([k, c]) => [k, mat(c)]));
+
+// Coolant flow: bright bands travel through the coolant routing. Injected
+// into the shared plumbing material, keyed on world position, so it needs
+// no per-hose data and costs nothing on the CPU.
+const flow = { uTime: { value: 0 }, uFlow: { value: REDUCED ? 0 : 1 } };
+MATS.plumbing.onBeforeCompile = sh => {
+  Object.assign(sh.uniforms, flow);
+  sh.vertexShader = sh.vertexShader
+    .replace("#include <common>", "#include <common>\nvarying vec3 vWP;")
+    .replace("#include <project_vertex>", "#include <project_vertex>\nvWP = (modelMatrix * vec4(transformed, 1.0)).xyz;");
+  sh.fragmentShader = sh.fragmentShader
+    .replace("#include <common>", "#include <common>\nvarying vec3 vWP;\nuniform float uTime;\nuniform float uFlow;")
+    .replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
+      float ph = fract(vWP.y * 1.4 + (vWP.x + vWP.z) * .55 - uTime * .5);
+      float band = smoothstep(0., .06, ph) * (1. - smoothstep(.06, .2, ph));
+      totalEmissiveRadiance += vec3(.45, .75, 1.) * band * .9 * uFlow;`);
+};
+MATS.plumbing.customProgramCacheKey = () => "coolant-flow";
+
+// Battery placeholders. V1/V2 CAD model the rack's empty shelves, not the
+// packs. Find the shelves (long, thin, horizontal frame members, clustered by
+// height), skip the top deck (the TMS sits there), and put one block on each
+// shelf, inset from the frame. Clearly labelled as placeholders.
+function addPacks(root, list, localCentre) {
+  root.updateMatrixWorld(true);
+  const boxes = list.map(o => ({ o, b: new THREE.Box3().setFromObject(o) }));
+  // Frame footprint = the vertical posts (tall, slender structure members).
+  const posts = new THREE.Box3();
+  let tmsBottom = Infinity;
+  for (const { o, b } of boxes) {
+    const sz = b.getSize(new THREE.Vector3());
+    if (o.userData.cat === "structure" && sz.y > 1.2 && sz.x < .15 && sz.z < .15) posts.union(b);
+    if (o.userData.cat === "thermal") tmsBottom = Math.min(tmsBottom, b.min.y);
+  }
+  if (posts.isEmpty()) return;
+  const inside = b => { const c = b.getCenter(new THREE.Vector3());
+    return c.x > posts.min.x && c.x < posts.max.x && c.z > posts.min.z && c.z < posts.max.z; };
+  // Shelves = heights where several long horizontal members sit, inside the
+  // frame and below the TMS.
+  const ys = [];
+  for (const { o, b } of boxes) {
+    const sz = b.getSize(new THREE.Vector3());
+    if (o.userData.cat === "structure" && sz.y < .1 && Math.max(sz.x, sz.z) > .5 && inside(b) && b.max.y < tmsBottom - .05)
+      ys.push(b.max.y);
+  }
+  ys.sort((a, b) => a - b);
+  const levels = [];
+  for (const y of ys) { const L = levels[levels.length - 1];
+    if (L && y - L.y < .12) { L.n++; L.y = Math.max(L.y, y); } else levels.push({ y, n: 1 }); }
+  const shelves = levels.filter(L => L.n >= 3).map(L => L.y);
+  shelves.push(Math.min(tmsBottom, posts.max.y));          // ceiling of the top bay
+  const inv = root.matrixWorld.clone().invert();
+  const w = (posts.max.x - posts.min.x) * .82, d = (posts.max.z - posts.min.z) * .82;
+  const cx = (posts.min.x + posts.max.x) / 2, cz = (posts.min.z + posts.max.z) / 2;
+  for (let i = 0; i < shelves.length - 1; i++) {
+    const gap = shelves[i + 1] - shelves[i];
+    if (gap < .25) continue;
+    const h = Math.min(gap * .6, .42);
+    // Bake the placement into the geometry, like the CAD meshes: the
+    // exploded view overwrites mesh.position on every part.
+    const g = new THREE.BoxGeometry(w, h, d);
+    g.applyMatrix4(new THREE.Matrix4().makeTranslation(cx, shelves[i] + h / 2 + .01, cz));
+    g.applyMatrix4(inv);                                   // world -> model space
+    const m = new THREE.Mesh(g, MATS.battery);
+    m.name = "Battery pack (placeholder)";
+    m.userData.cat = "battery";
+    g.computeBoundingBox();
+    m.userData.dir = g.boundingBox.getCenter(new THREE.Vector3()).sub(localCentre);
+    root.add(m); list.push(m);
+  }
+}
+
+function prep(gltf, cats, v) {
+  const root = gltf.scene, list = [];
+  const order = new Map(root.children.map((c, i) => [c, i]));   // node index -> its category
+  const box = new THREE.Box3().setFromObject(root), c = box.getCenter(new THREE.Vector3());
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    const node = o.parent && o.parent !== root && o.parent.userData.path ? o.parent : o;
+    const cat = cats[order.get(node)] || "structure";
+    o.material = MATS[cat];
+    o.userData.cat = cat;
+    o.geometry.computeBoundingBox();
+    const pc = o.geometry.boundingBox.getCenter(new THREE.Vector3());
+    o.userData.dir = pc.sub(c);            // explode direction: away from model centre
+    list.push(o);
+  });
+  // Explode by component when the model says which parts belong together
+  // (extras.group): a whole charger module or the TMS box moves as one, so
+  // pulling the rack apart never lays a component's internals out.
+  const G = new Map();
+  for (const o of list) if (o.userData.group !== undefined) {
+    const g = G.get(o.userData.group) || { sum: new THREE.Vector3(), n: 0, members: [] };
+    g.sum.add(o.userData.dir.clone().add(c)); g.n++; g.members.push(o); G.set(o.userData.group, g);
+  }
+  for (const g of G.values()) { const gc = g.sum.divideScalar(g.n).sub(c); g.members.forEach(o => o.userData.dir = gc); }
+  // Default front: the wider of the two vertical faces, on the side AWAY
+  // from the coolant plumbing (on the real units the plumbing is at the
+  // back). A version can still override it with `front: [x, y, z]`.
+  const ext = box.getSize(new THREE.Vector3());
+  const pb = new THREE.Box3();
+  list.filter(o => o.userData.cat === "plumbing").forEach(o => pb.expandByObject(o));
+  const off = pb.isEmpty() ? new THREE.Vector3() : pb.getCenter(new THREE.Vector3()).sub(c);
+  // axis: pin the front when a rebuilt model would fool the plumbing rule
+  // (V4 blocked: same geometry, different plumbing spread).
+  const front = v?.axis || (ext.x >= ext.z ? [0, 0, off.z > 0 ? -1 : 1] : [off.x > 0 ? -1 : 1, 0, 0]);
+  // The CAD files disagree on which way is up (V1 lies on its side, V2-V4
+  // are upside down: Prince checked each against the real rack, where the
+  // TMS sits on top). Roll about the FRONT axis so the front stays front.
+  if (v?.roll) {
+    root.rotateOnWorldAxis(new THREE.Vector3(...front), THREE.MathUtils.degToRad(v.roll));
+    root.updateMatrixWorld(true);
+  }
+  // flip: upside-down AND back-to-front (V3-V4). A 180° turn about the side
+  // axis puts the TMS on top and its face towards the viewer.
+  if (v?.flip) {
+    const side = new THREE.Vector3(0, 1, 0).cross(new THREE.Vector3(...front)).normalize();
+    root.rotateOnWorldAxis(side, Math.PI);
+    root.updateMatrixWorld(true);
+  }
+  // plain: categories this version shows uncoloured. Electrical (the side
+  // cabinets) is plain in every version: the story is the thermal system.
+  for (const o of list) if (v?.plain?.includes(o.userData.cat)) { o.userData.cat = "structure"; o.material = MATS.structure; }
+  if (v?.interfaces) for (const o of list) {
+    const text = o.name + " " + (o.userData.path || []).join(" ");
+    if (v.interfaces.test(text)) { o.userData.cat = "interface"; o.material = MATS.interface; }
+  }
+  if (v?.packs) addPacks(root, list, c);
+  const wb = new THREE.Box3().setFromObject(root), wc = wb.getCenter(new THREE.Vector3());
+  // Tag the TMS so a recruiter can name it at a glance: centred on the
+  // union of everything coloured as TMS.
+  const tms = new THREE.Box3();
+  list.filter(o => o.userData.cat === "thermal").forEach(o => tms.union(new THREE.Box3().setFromObject(o)));
+  const tags = [];
+  if (!tms.isEmpty()) {
+    const el = document.createElement("div");
+    el.className = "tag"; el.textContent = "BTMS & CTMS";
+    const t = new CSS2DObject(el);
+    t.position.copy(tms.getCenter(new THREE.Vector3()));
+    tags.push(t);
+  }
+  // Floor grid under the model: gives the dark scene a ground and scale.
+  const span = Math.ceil(Math.max(ext.x, ext.z) * 2.2);
+  const grid = new THREE.GridHelper(span, span * 2, 0x3a3f44, 0x1c1f22);
+  grid.position.set(wc.x, wb.min.y - .002, wc.z);
+  return { root, list, center: wc, size: ext.length(), front, tags, grid };
+}
+
+// ---------------------------------------------------------------- camera
+// Saved start views (views.json, written by "Save as start view" via the
+// preview server): per version, the camera direction from the model centre
+// and its distance relative to the model size.
+let VIEWS = {};
+const viewsReady = fetch("views.json", { cache: "no-cache" }).then(r => r.ok ? r.json() : {}).then(j => VIEWS = j).catch(() => {});
+
+// Every camera change is a short eased flight, not a jump.
+let fly = null;
+const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+function flyTo(pos, target, ms = 900) {
+  if (REDUCED) ms = 0;
+  fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1: pos.clone(), t1: target.clone(), start: performance.now(), ms };
+}
+
+function viewFor(m, v) {
+  const saved = v && VIEWS[v.id];
+  if (saved && !v.front) {
+    return m.center.clone()
+      .add(new THREE.Vector3(...saved.dir).normalize().multiplyScalar(saved.dist * 1.15 * m.size));   // 1.15: Prince asked for a little more room
+  }
+  const f = new THREE.Vector3(...(v?.front || m.front)).normalize();
+  // Fit the bounding sphere in whichever field of view is narrower, so a
+  // tall rack in a narrow window is not cropped.
+  const r = m.size / 2, vf = THREE.MathUtils.degToRad(camera.fov) / 2;
+  const hf = Math.atan(Math.tan(vf) * camera.aspect);
+  const dist = r / Math.sin(Math.min(vf, hf)) * .9;
+  return m.center.clone().add(f.multiplyScalar(dist)).add(new THREE.Vector3(0, r * .15, 0));
+}
+function frame(m, v = currentV, ms) { camera.up.set(0, 1, 0); flyTo(viewFor(m, v), m.center, ms); }
+
+// Fly to a highlighted group: keep the viewing direction, fit the group.
+function focusGroup(cat) {
+  const b = new THREE.Box3();
+  parts.forEach(o => { if (o.userData.cat === cat) b.union(new THREE.Box3().setFromObject(o)); });
+  if (b.isEmpty()) return;
+  const c = b.getCenter(new THREE.Vector3()), r = b.getSize(new THREE.Vector3()).length() / 2;
+  const vf = THREE.MathUtils.degToRad(camera.fov) / 2, hf = Math.atan(Math.tan(vf) * camera.aspect);
+  // Never further out than we already are: a highlight should move IN.
+  const now = camera.position.distanceTo(controls.target);
+  const dist = Math.min(Math.max(r / Math.sin(Math.min(vf, hf)) * 1.15, current.size * .4), now * .9);
+  const dir = camera.position.clone().sub(controls.target).normalize();
+  flyTo(c.clone().add(dir.multiplyScalar(dist)), c);
+}
+
+// Idle turntable: after 4 s without input the model slowly rotates; any
+// touch stops it (and cancels a flight in progress).
+let lastInput = performance.now();
+controls.addEventListener("start", () => { lastInput = performance.now(); fly = null; controls.autoRotate = false; });
+controls.addEventListener("end", () => { lastInput = performance.now(); });
+
+let flashTimer;
+function flash(msg) {
+  status.style.display = "flex"; status.innerHTML = "<span>" + msg + "</span>";
+  clearTimeout(flashTimer); flashTimer = setTimeout(() => status.style.display = "none", 3500);
+}
+
+// Assemble-in: a version arrives exploded and pulls together. `expNow` is
+// what is drawn; it chases the slider (`expTarget`) every frame.
+let expNow = 0, expTarget = 0;
+
+async function show(v) {
+  if (v.pending) { flash(`${v.name} (${v.cap}) is still being converted from CAD. Check back shortly.`); return; }
+  // Load BEFORE touching the UI: a failed load must leave the current
+  // version on screen and selected, not a new label over the old model.
+  if (!cache[v.id]) {
+    status.style.display = "flex"; status.innerHTML = "<span>Loading " + v.name + " · " + v.cap + "…</span>";
+    try {
+      const t0 = performance.now();
+      const [gltf, cats] = await Promise.all([loader.loadAsync(v.file),
+        fetch(v.file.replace(/\.glb$/, ".cats.json"), { cache: "no-cache" }).then(r => r.json())]);
+      const t1 = performance.now();
+      cache[v.id] = prep(gltf, cats, v);
+      console.info(`[cad] ${v.name}: fetch+parse ${Math.round(t1 - t0)} ms, prep ${Math.round(performance.now() - t1)} ms`);
+    } catch (e) { flash(`Could not load ${v.name}: ${e.message}`); return; }
+  }
+  document.querySelectorAll("#timeline .btn").forEach(b => b.classList.toggle("on", b.dataset.id === v.id));
+  const story = document.getElementById("story");
+  story.innerHTML = `<div class="lbl">${v.name} · ${v.cap}</div>` + v.story.map(t => `<p>${t}</p>`).join("");
+  story.classList.remove("swap"); void story.offsetWidth; story.classList.add("swap");
+  const hud = document.getElementById("hud");
+  document.getElementById("hudName").textContent = v.name;
+  document.getElementById("hudCap").textContent = v.cap;
+  hud.classList.remove("in"); void hud.offsetWidth; hud.classList.add("in");
+  const m = cache[v.id];
+  if (current) { scene.remove(current.root, current.grid); current.tags.forEach(t => scene.remove(t)); }
+  m.tags.forEach(t => scene.add(t));
+  scene.add(m.root, m.grid); current = m; parts = m.list; center = m.center;
+  currentV = v;
+  if (!show.started) {               // first load: start pulled far back, then fly in
+    const p = viewFor(m, v);
+    camera.position.copy(m.center).add(p.sub(m.center).multiplyScalar(2.4)); controls.target.copy(m.center);
+    show.started = true;
+  }
+  frame(m, v, 1400);                 // fly to the version's start view
+  expNow = REDUCED ? expTarget : 1.1;  // ...while it assembles
+  lastInput = performance.now(); controls.autoRotate = false;
+  apply(); status.style.display = "none";
+}
+
+let lit = null;                      // the highlighted group, if any
+function apply() {
+  // SHOW highlights one group at a time (glows in its own colour); the rest
+  // fade toward dark grey but stay solid. Prince's call, 2026-11-06.
+  const see = {}; document.querySelectorAll("[data-cat]").forEach(i => see[i.dataset.cat] = i.checked);
+  lit = Object.keys(see).find(k => see[k]) || null;
+  const xray = document.getElementById("xray").checked;
+  expTarget = +document.getElementById("explode").value / 100;
+  const style = currentV?.style || {};
+  for (const [cat, m] of Object.entries(MATS)) {
+    let op = style[cat] ?? 1;
+    // Ghost everything; a highlighted group stays solid so it reads through.
+    if (xray && cat !== lit) op = Math.min(op, .08);
+    const clear = op < 1;
+    if (m.transparent !== clear) { m.transparent = clear; m.needsUpdate = true; }
+    m.opacity = op; m.depthWrite = !clear;
+    m.userData.baseOp = op;            // the loop may fade further (explodeGhost)
+    m.visible = true;
+    m.color.setHex(COLORS[cat]);
+    if (lit && cat !== lit) m.color.lerp(DIM, .72);
+    m.emissive.setHex(cat === lit ? COLORS[cat] : 0);
+    m.emissiveIntensity = cat === lit ? .45 : 1;
+  }
+}
+document.querySelectorAll("aside input").forEach(i => i.addEventListener("input", apply));
+// Ghost everything + Coolant routing would leave the routing as the only
+// solid thing on screen: the one view that exposes it most. Not allowed:
+// each switches the other off, and the routing row greys out while ghosting.
+const xrayBox = document.getElementById("xray"), routeBox = document.querySelector('[data-cat="plumbing"]');
+function lockRouting() {
+  routeBox.disabled = xrayBox.checked;
+  routeBox.closest(".row").classList.toggle("off", xrayBox.checked);
+}
+xrayBox.addEventListener("input", () => {
+  if (xrayBox.checked && routeBox.checked) { routeBox.checked = false; if (current) frame(current); }
+  lockRouting(); apply();
+});
+// One highlight at a time; ticking a group flies the camera to it, unticking
+// flies back to the start view.
+document.querySelectorAll("[data-cat]").forEach(i => i.addEventListener("input", () => {
+  if (i.checked) document.querySelectorAll("[data-cat]").forEach(o => { if (o !== i) o.checked = false; });
+  apply();
+  lastInput = performance.now(); controls.autoRotate = false;
+  if (!current) return;
+  if (i.checked) focusGroup(i.dataset.cat); else frame(current);
+}));
+
+// No click-to-identify: in the full-detail V4 the node names are real BOM
+// part numbers, so nothing on the page may surface a part name.
+
+const tl = document.getElementById("timeline");
+VERSIONS.forEach(v => {
+  const b = document.createElement("button"); b.className = "btn"; b.dataset.id = v.id;
+  b.innerHTML = `${v.name}<small>${v.cap}</small>`; b.onclick = () => show(v).catch(err);
+  tl.appendChild(b);
+  // A version whose file is not there yet is marked, not left to 404 on click.
+  fetch(v.file, { method: "HEAD" }).then(r => {
+    if (r.ok) return;
+    v.pending = true; b.classList.add("pending"); b.querySelector("small").textContent = "converting…";
+  }).catch(() => {});
+});
+document.getElementById("reset").onclick = () => {
+  if (!current) return;
+  document.querySelectorAll("[data-cat]").forEach(o => o.checked = false); apply();
+  lastInput = performance.now(); controls.autoRotate = false; frame(current);
+};
+function err(e) { status.style.display = "flex"; status.innerHTML = "<span>Could not load model: " + e.message + "</span>"; }
+viewsReady.then(() => show(VERSIONS[0])).catch(err);
+
+// ---------------------------------------------------------------- loop
+const clock = new THREE.Clock();
+const HOT = new THREE.Color(COLORS.heatload);
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime, now = performance.now();
+
+  if (fly) {                                   // eased camera flight
+    const k = fly.ms ? Math.min((now - fly.start) / fly.ms, 1) : 1, e = ease(k);
+    camera.position.lerpVectors(fly.p0, fly.p1, e);
+    controls.target.lerpVectors(fly.t0, fly.t1, e);
+    if (k >= 1) fly = null;
+  }
+  // Idle turntable.
+  controls.autoRotate = !REDUCED && !fly && now - lastInput > 4000;
+
+  // Assemble-in / exploded view: chase the slider, write positions only
+  // while moving.
+  if (Math.abs(expTarget - expNow) > 1e-4) {
+    expNow += (expTarget - expNow) * Math.min(1, dt * 3.2);
+    if (Math.abs(expTarget - expNow) < 1e-4) expNow = expTarget;
+    for (const o of parts) o.position.copy(o.userData.dir).multiplyScalar(expNow * 1.2);
+  }
+
+  // explodeGhost: listed groups switch to their exploded opacity (0 =
+  // hidden) as soon as the rack is opened, on top of whatever apply() set.
+  const eg = currentV?.explodeGhost;
+  if (eg) for (const [cat, g] of Object.entries(eg)) {
+    const m = MATS[cat], base = m.userData.baseOp ?? 1;
+    // Instant, no fade: the moment the rack starts to open (slider moved or
+    // still assembling) the group drops to its exploded opacity.
+    const opening = expTarget > 0 || expNow > .002;
+    const op = opening ? Math.min(base, g) : base;
+    const clear = op < .999;
+    if (m.transparent !== clear) { m.transparent = clear; m.needsUpdate = true; }
+    m.opacity = op; m.depthWrite = !clear;
+    m.visible = op > .01;              // fully faded = hidden (Prince: hide coolant routing when exploded)
+    if (cat === "plumbing" && !REDUCED) flow.uFlow.value = op;   // dim the flow bands with it
+  }
+  if (!eg && !REDUCED) flow.uFlow.value = 1;
+
+  // Coolant flow + charger heat pulse.
+  flow.uTime.value = t;
+  if (!REDUCED) {
+    const mh = MATS.heatload, pulse = .5 + .5 * Math.sin(t * 2.2);
+    mh.emissive.copy(HOT);
+    mh.emissiveIntensity = lit === "heatload" ? .45 + .15 * pulse : (lit ? .03 : .08 + .14 * pulse);
+  }
+
+  controls.update();
+  renderer.render(scene, camera);
+  labels.render(scene, camera);
+});
+</script>
+</body>
+</html>

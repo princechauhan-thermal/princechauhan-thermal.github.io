@@ -124,7 +124,7 @@ window.SITE = {
 
   contact: {
     availability: "Open to thermal roles in aerospace and spacecraft.",
-    updated: "2026-09"
+    updated: "2026-11"
   },
 
   // The portrait enters as the drawing set's TITLE BLOCK — the cell that records

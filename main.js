@@ -35,9 +35,11 @@
         '<span class="masthead__sub">' + S.person.role + ' · ' + S.person.location + '</span>' +
       '</div>' +
       '<nav class="masthead__nav" aria-label="Contents">' +
+        '<a href="#evolution">3D</a>' +
         '<a href="#work">Work</a>' +
         '<a href="#patents">Patents</a>' +
         '<a href="#skills">Skills</a>' +
+        '<a href="#resume">Résumé</a>' +
         '<a href="#contact">Contact</a>' +
       '</nav>' +
     '</div>';
@@ -61,6 +63,36 @@
         'font-weight="500" font-family="Archivo,sans-serif">' + env.span + '</text>' +
       '<line class="env-fade" x1="390" y1="24" x2="390" y2="40" stroke="#cc2a1e" stroke-width="2.5"/>' +
     '</svg>';
+
+  /* ---- Evolution: the interactive 3D viewer ----
+     Click-to-load: the viewer pulls three.js and the models (POC ~3 MB to
+     start, Pilot ~41 MB when chosen), so nothing downloads until a visitor
+     asks for it. The viewer itself lives at viewer/ and also opens full
+     screen on its own. */
+  $("evolution").innerHTML =
+    '<div class="sect__label">Evolution</div>' +
+    '<div class="sect__body reveal">' +
+      '<div class="evo" id="evo">' +
+        '<div class="evo__poster">' +
+          '<div class="evo__kicker">FIG. 0 · Interactive 3D</div>' +
+          '<div class="evo__title">TMS Evolution</div>' +
+          '<div class="evo__steps"><span>POC</span><i>→</i><span>Prototype</span><i>→</i><span>Pilot</span></div>' +
+          '<p class="evo__line">The battery-swap rack thermal systems I designed, from proof of concept to pilot. ' +
+            'Rotate, explode, and highlight the coolant routing, chargers and BTMS + CTMS unit.</p>' +
+          '<div class="evo__actions">' +
+            '<button class="evo__btn" id="evo-load" type="button">Load 3D viewer</button>' +
+            '<a class="evo__btn evo__btn--ghost" href="viewer/" target="_blank" rel="noopener">Open full screen</a>' +
+          '</div>' +
+          '<div class="evo__note">Block view: design features hidden to keep the work confidential. ~3 MB to start.</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.getElementById("evo-load").addEventListener("click", function () {
+    var box = document.getElementById("evo");
+    box.innerHTML = '<iframe class="evo__frame" src="viewer/" title="TMS Evolution, interactive 3D viewer" ' +
+      'allow="fullscreen" loading="eager"></iframe>' +
+      '<a class="evo__full" href="viewer/" target="_blank" rel="noopener">Open full screen ↗</a>';
+  });
 
   /* ---- Work ---- */
   function figLinks(figs) {
@@ -211,6 +243,22 @@
       '<table class="edu-table"><thead><tr>' +
         '<th>Year</th><th>Qualification</th><th>Institution</th><th>Focus</th>' +
       '</tr></thead><tbody>' + eduRows + '</tbody></table>' +
+    '</div>';
+
+  /* ---- Résumé ----
+     The PDF itself, viewable in place, so a recruiter reads the same document
+     they would be sent. Phones cannot render an inline PDF reliably, so below
+     the breakpoint the frame is hidden and the buttons carry it. */
+  $("resume").innerHTML =
+    '<div class="sect__label">Résumé</div>' +
+    '<div class="sect__body reveal">' +
+      '<div class="resume__bar">' +
+        '<a class="resume__btn" href="' + S.person.resume + '" download>Download PDF</a>' +
+        '<a class="resume__btn resume__btn--ghost" href="' + S.person.resume + '" target="_blank" rel="noopener">Open in new tab</a>' +
+      '</div>' +
+      '<div class="resume__frame">' +
+        '<iframe src="' + S.person.resume + '#view=FitH&toolbar=0" title="Prince Chauhan résumé" loading="lazy"></iframe>' +
+      '</div>' +
     '</div>';
 
   /* ---- Contact ---- */

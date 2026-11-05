@@ -1,0 +1,198 @@
+/* ==========================================================================
+   Dark brutalist skin, matching the CAD viewer (cad-preview/).
+
+   Loaded AFTER styles.css and only overrides: delete its <link> in
+   index.html and the light "Plate Set" theme returns untouched.
+
+   What is deliberately kept from the approved light design: the drawing-set
+   structure (part-numbered projects, one sentence each, FIG. plates, the
+   BOM index), full-colour photographs, and no cards / gradients / modals —
+   the things Prince rejected in the first dark version (2026-09-06).
+   What changes: near-black ground, 2px white rules, hard offset shadows,
+   heavy uppercase display type, one acid accent (the viewer's).
+   Figure plates stay LIGHT on purpose: the schematics are inked for paper,
+   and a white plate on black reads as a pinned drawing sheet.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+  --paper: #0b0c0d;
+  --panel: #101214;
+  --sheet: #f4f4f0;            /* figure plates: drawing paper */
+  --ink: #f2f2ec;
+  --ink-70: #b8bbbe;
+  --ink-45: #7a7f85;
+  --ink-20: #33373b;
+  --grid: #1c1f22;
+  --acc: #e4ff1a;
+  --correction: #e4ff1a;       /* the single accent, now the viewer's acid */
+  --font: "Archivo", "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+  --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+::selection { background: var(--acc); color: #000; }
+body { background: var(--paper); }
+a { text-decoration-color: var(--ink-45); }
+a:hover { text-decoration-color: var(--acc); }
+a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
+.skip { background: var(--acc); color: #000; }
+
+/* ---- Masthead ---- */
+.masthead__name {
+  font-weight: 900;
+  font-size: 34px;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+.masthead__sub { color: var(--acc); }
+.masthead__nav { gap: 8px; }
+.masthead__nav a {
+  font: 800 11.5px var(--font);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--ink);
+  padding: 7px 11px;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform .08s ease-out, box-shadow .08s ease-out, background .12s, color .12s;
+}
+.masthead__nav a:first-child { padding-left: 11px; }
+.masthead__nav a:last-child { border-right: 2px solid var(--ink); padding-right: 11px; }
+.masthead__nav a:hover { background: var(--acc); color: #000; border-color: var(--acc); }
+.masthead__nav a:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
+
+/* ---- Running head ---- */
+.running-head { background: var(--paper); border-bottom: 2px solid var(--ink); }
+.rh__left { color: var(--ink); font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+.rh__right { color: var(--acc); }
+.rh__face { border: 2px solid var(--ink); }
+.rh__progress { height: 2px; bottom: -2px; background: var(--acc); }
+
+/* ---- Lede ---- */
+.lede__text { font-weight: 500; }
+.lede__text .mark {
+  text-decoration: none;
+  background: var(--acc);
+  color: #000;
+  padding: 0 .15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+/* The envelope is inline SVG with ink baked into its attributes; CSS beats
+   presentation attributes, so re-ink it here rather than in main.js. */
+.lede__envelope [stroke="#16181a"] { stroke: var(--ink); }
+.lede__envelope [fill="#16181a"]   { fill: var(--ink); }
+.lede__envelope [stroke="#c7cbce"] { stroke: var(--ink-45); }
+.lede__envelope [fill="#82878c"]   { fill: var(--ink-45); }
+.lede__envelope [stroke="#cc2a1e"] { stroke: var(--acc); }
+
+/* ---- Section labels: the viewer's acid-square bullet ---- */
+.sect__label, .earlier-label, .award-label {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--ink-45);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.sect__label::before, .earlier-label::before, .award-label::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 3px;
+  background: var(--acc);
+}
+.sect__count { color: var(--acc); }
+
+/* ---- Tables: heavy outer rules, quiet inner ones ---- */
+.bom, .earlier-table, .exp-table, .patents-table, .edu-table, .award-table { background: transparent; }
+.bom th, .patents-table th, .edu-table th { color: var(--ink-45); border-bottom: 2px solid var(--ink) !important; }
+.bom td, .earlier-table td, .exp-table td, .patents-table td, .edu-table td, .award-table td { border-color: var(--grid); }
+.bom tr:last-child td, .earlier-table tr:last-child td, .exp-table tr:last-child td,
+.patents-table tr:last-child td, .edu-table tr:last-child td, .award-table tr:last-child td { border-bottom: 2px solid var(--ink); }
+.exp-table tr:first-child td, .award-table tr:first-child td { border-top: 2px solid var(--ink); }
+.bom__code a, .bom__code { color: var(--acc); }
+.bom tbody tr { transition: background .12s; }
+.bom tbody tr:hover { background: rgba(228, 255, 26, .05); }
+.skills-row { border-color: var(--grid); }
+.skills-row:first-child { border-top: 2px solid var(--ink); }
+.skills-row:last-child { border-bottom: 2px solid var(--ink); }
+.skills-row__domain { color: var(--ink); font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: .06em; }
+
+/* ---- Projects ---- */
+.project { border-top: 2px solid var(--ink); }
+.project__folio {
+  font-weight: 900;
+  font-size: 56px;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-45);
+}
+.project__code { color: var(--acc); }
+.project__title { font-weight: 900; text-transform: uppercase; letter-spacing: -.005em; font-size: 19px; }
+.meta-row { border-top-color: var(--grid); }
+.meta-item dt { color: var(--ink-45); }
+.meta-item dd { color: var(--ink); }
+
+/* ---- Plates: drawing sheets pinned to a black wall ---- */
+.plate__tag { color: var(--ink-45); }
+.plate__tag-title { color: var(--ink); }
+.plate__frame {
+  background: var(--sheet);
+  border: 2px solid var(--ink);
+  border-left-width: 2px;
+  border-left-color: var(--ink);
+  box-shadow: 6px 6px 0 var(--ink-20);
+}
+.plate--flash .plate__frame { border-left-width: 2px; border-left-color: var(--acc); box-shadow: 6px 6px 0 var(--acc); }
+.plate__caption { color: var(--ink-45); }
+.plate__stamp { color: var(--ink-45); }
+.plate__frame--portrait img { border: 2px solid #0b0c0d; }
+.fig-ref { color: var(--acc); }
+.fig-ref:hover { color: var(--acc); text-decoration-color: var(--acc); }
+
+/* ---- Position statement ---- */
+.position { border-left: 6px solid var(--acc); font-weight: 800; text-transform: uppercase; letter-spacing: -.005em; line-height: 1.25; }
+
+/* ---- Résumé (section added 2026-11-05) ---- */
+.resume__btn {
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  font: 800 12px var(--font);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  transition: transform .08s ease-out, box-shadow .08s ease-out, background .12s, color .12s;
+}
+.resume__btn:hover { opacity: 1; background: var(--acc); color: #000; border-color: var(--acc); }
+.resume__btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); }
+.resume__btn--ghost { background: var(--paper); color: var(--ink); }
+.resume__frame { border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink-20); background: var(--sheet); }
+
+/* ---- Contact & footer ---- */
+.contact__avail { font-weight: 800; text-transform: uppercase; letter-spacing: -.005em; line-height: 1.25; }
+.contact__links a { color: var(--ink); text-decoration-color: var(--acc); }
+.footer { border-top: 2px solid var(--ink); color: var(--ink-45); }
+.footer__meta { color: var(--acc); }
+
+@media (max-width: 760px) {
+  .masthead__nav { flex-wrap: wrap; }
+  .project__folio { font-size: 40px; }
+}
+
+/* ---- Evolution embed: the viewer's own skin, so the hand-off is seamless ---- */
+.evo { border: 2px solid var(--ink); background: var(--paper); box-shadow: 6px 6px 0 var(--acc); }
+.evo__kicker { color: var(--acc); }
+.evo__title { font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; }
+.evo__steps span { border: 2px solid var(--ink); padding: 4px 9px; color: var(--ink); font-weight: 600; }
+.evo__steps span:last-child { background: var(--acc); color: #000; border-color: var(--acc); }
+.evo__btn { font: 800 12px var(--font); text-transform: uppercase; letter-spacing: .04em;
+            background: var(--acc); color: #000; border: 2px solid var(--acc); box-shadow: 4px 4px 0 var(--ink);
+            transition: transform .08s ease-out, box-shadow .08s ease-out; }
+.evo__btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.evo__btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); }
+.evo__btn--ghost { background: var(--paper); color: var(--ink); border-color: var(--ink); }
+.evo__note { color: var(--ink-45); }
+.evo__full { color: var(--acc); border-top: 2px solid var(--ink); }

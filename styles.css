@@ -847,3 +847,39 @@ img { max-width: 100%; display: block; }
     animation: none !important;
   }
 }
+
+/* ---- Résumé ---- */
+.resume__bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.resume__btn {
+  display: inline-block; padding: 9px 16px; font-size: 13px; letter-spacing: .04em;
+  background: var(--ink); color: var(--paper); text-decoration: none;
+  border: 1px solid var(--ink);
+}
+.resume__btn:hover { opacity: .85; }
+.resume__btn--ghost { background: transparent; color: var(--ink); }
+.resume__frame {
+  border: 1px solid var(--ink-20); background: #fff;
+  aspect-ratio: 210 / 297; max-height: 1100px; width: 100%;
+}
+.resume__frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+@media (max-width: 700px) { .resume__frame { display: none; } }
+
+/* ---- Evolution: 3D viewer embed (poster until clicked) ---- */
+#evolution .sect__body { grid-column: 1 / -1; }   /* the viewer wants the full width */
+#evolution .sect__label { margin-bottom: 20px; }
+.evo { border: 1px solid var(--ink-20); background: var(--panel); }
+.evo__poster { padding: 36px 32px 30px; }
+.evo__kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-45); }
+.evo__title { font-size: clamp(30px, 5vw, 52px); line-height: 1; margin-top: 10px; font-weight: 500; }
+.evo__steps { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px;
+              font-family: var(--mono); font-size: 13px; color: var(--ink-70); }
+.evo__steps i { font-style: normal; color: var(--ink-45); }
+.evo__line { max-width: 56ch; margin-top: 18px; color: var(--ink-70); font-size: 15px; line-height: 1.55; }
+.evo__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.evo__btn { display: inline-block; padding: 10px 16px; font: inherit; font-size: 13px; cursor: pointer;
+            background: var(--ink); color: var(--panel); border: 1px solid var(--ink); text-decoration: none; }
+.evo__btn--ghost { background: transparent; color: var(--ink); }
+.evo__note { margin-top: 16px; font-family: var(--mono); font-size: 11px; color: var(--ink-45); }
+.evo__frame { display: block; width: 100%; height: min(82vh, 760px); border: 0; background: #0b0c0d; }
+.evo__full { display: block; padding: 8px 12px; font-family: var(--mono); font-size: 11px; text-align: right; }
+@media (max-width: 760px) { .evo__poster { padding: 24px 18px; } .evo__frame { height: 88vh; } }

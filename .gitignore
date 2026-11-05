@@ -28,3 +28,15 @@ __pycache__/
 
 # Derived factory photos pending Sun Mobility sign-off — kept out of the build
 assets/media/photo-*.jpg
+
+# Sun Mobility CAD and anything derived from it. Not public until the
+# sanitized model is approved AND Sun Mobility has signed off.
+assets/cad/
+cad-preview/
+
+# CAD pipeline tools: their matching rules name suppliers and internal part
+# numbers. The PUBLISHED outputs (assets/models/, viewer/) are generic.
+tools/cad_categorise.py
+tools/cad_sanitize.py
+tools/btms_ctms_model.py
+tools/preview_server.py
