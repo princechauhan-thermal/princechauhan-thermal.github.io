@@ -907,3 +907,21 @@ img { max-width: 100%; display: block; }
   .chal-table tr { border-bottom: 1px solid var(--grid); padding: 10px 0; }
   .chal-table td { border: 0 !important; padding: 2px 0; }
 }
+
+/* ---- Coolant line (scroll progress as coolant, cold -> hot) ---- */
+.coolant { position: fixed; left: 26px; top: 64px; bottom: 28px; width: 4px; z-index: 50; pointer-events: none;
+           background: var(--grid); --p: 0; }
+.coolant__fill { position: absolute; inset: 0; transform-origin: 50% 0; transform: scaleY(var(--p));
+                 background: linear-gradient(#3d7ff0, #e8503a); }
+.coolant__fill::after { content: ""; position: absolute; inset: 0;   /* flowing dashes: coolant moving */
+                 background: repeating-linear-gradient(180deg, rgba(255,255,255,.55) 0 6px, transparent 6px 22px);
+                 animation: coolant-flow 1.1s linear infinite; }
+@keyframes coolant-flow { to { background-position: 0 22px; } }
+.coolant__tip { position: absolute; left: 50%; top: calc(var(--p) * 100%); width: 12px; height: 12px;
+                margin: -6px 0 0 -6px; background: var(--paper); border: 2px solid var(--ink); }
+.coolant__tip span { position: absolute; left: 18px; top: -3px; white-space: nowrap; font-family: var(--mono);
+                     font-size: 10.5px; color: var(--ink-70); font-feature-settings: "tnum" 1; }
+.tick { font-feature-settings: "tnum" 1; }
+@media (max-width: 1180px) { .coolant__tip span { display: none; } }   /* no gutter for the readout */
+@media (max-width: 760px) { .coolant { left: 6px; width: 3px; top: 40px; } .coolant__tip { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; } }
+@media (prefers-reduced-motion: reduce) { .coolant__fill::after { animation: none; } }

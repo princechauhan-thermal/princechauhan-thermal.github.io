@@ -500,25 +500,61 @@
       });
   });
 
-  /* ---- Envelope draws itself on load ---- */
+  /* ---- Envelope draws itself when it is reached ----
+     It used to open the page and draw on load; it now closes Challenges
+     conquered, so it is primed hidden here and drawn by the reveal engine. */
+  var envSvg = document.querySelector(".lede__envelope");
+  function drawEnvelope() {
+    if (!envSvg || envSvg.dataset.drawn) return;
+    envSvg.dataset.drawn = "1";
+    var rule = envSvg.querySelector(".env-rule");
+    rule.style.transition = "stroke-dashoffset 900ms cubic-bezier(.22,.61,.36,1) 250ms";
+    rule.style.strokeDashoffset = "0";
+    envSvg.querySelectorAll(".env-fade").forEach(function (el, i) {
+      el.style.transition = "opacity 500ms ease " + (900 + i * 70) + "ms";
+      el.style.opacity = "1";
+    });
+  }
   if (!reduced) {
-    var envSvg = document.querySelector(".lede__envelope");
     if (envSvg) {
       var rule = envSvg.querySelector(".env-rule");
       var len = rule.getTotalLength();
       rule.style.strokeDasharray = len;
       rule.style.strokeDashoffset = len;
       envSvg.querySelectorAll(".env-fade").forEach(function (el) { el.style.opacity = "0"; });
-      requestAnimationFrame(function () {
-        rule.style.transition = "stroke-dashoffset 900ms cubic-bezier(.22,.61,.36,1) 250ms";
-        rule.style.strokeDashoffset = "0";
-        envSvg.querySelectorAll(".env-fade").forEach(function (el, i) {
-          el.style.transition = "opacity 500ms ease " + (900 + i * 70) + "ms";
-          el.style.opacity = "1";
-        });
-      });
     }
   }
+
+  /* ---- Number tickers ----
+     Counts in the outcomes (100+ swaps, ~18%, 25–35 °C, the 65 °C span)
+     run up from zero when their section is revealed. Only short integers
+     in outcome text are wrapped: years and "Q3 FY2025" are left alone. */
+  function prepTicks() {
+    var sel = ".chal-a, .meta-item:nth-child(3) dd";
+    document.querySelectorAll(sel).forEach(function (el) {
+      if (/FY|Q\d/.test(el.textContent)) return;
+      el.innerHTML = el.innerHTML.replace(/(^|[^\w.\d])(\d{1,3})(?![\d])/g, function (m, pre, n) {
+        return pre + '<span class="tick" data-to="' + n + '">' + n + '</span>';
+      });
+    });
+    if (envSvg) envSvg.querySelectorAll("text").forEach(function (t) {
+      var m = t.textContent.match(/^(\d{1,3})(.*)$/);
+      if (m) { t.classList.add("tick"); t.dataset.to = m[1]; t.dataset.suffix = m[2]; }
+    });
+  }
+  function runTicks(root) {
+    root.querySelectorAll(".tick").forEach(function (el) {
+      if (el.dataset.ran) return;
+      el.dataset.ran = "1";
+      var to = +el.dataset.to, suffix = el.dataset.suffix || "", t0 = performance.now(), dur = 1100;
+      (function step(now) {
+        var k = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
+        el.textContent = Math.round(to * e) + suffix;
+        if (k < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }
+  prepTicks();
 
   /* ---- Section reveals ---- */
   function show(el) { el.classList.add("in"); }
@@ -539,7 +575,12 @@
     });
 
     document.querySelectorAll(".reveal, .lift").forEach(function (el) {
-      watch(el, show);
+      watch(el, function (e) {
+        show(e);
+        // Counters start as the shutter opens; the envelope draws once reached.
+        setTimeout(function () { runTicks(e); }, 380);
+        if (e.querySelector(".lede__envelope")) setTimeout(drawEnvelope, 300);
+      });
     });
     var bomEl = document.querySelector(".bom");
     if (bomEl) {
@@ -557,12 +598,21 @@
   var rhSec = $("rh-section");
   var sentinel = $("masthead");
 
-  var sectionEls = ["work", "experience", "patents", "skills", "education", "contact"]
+  var sectionEls = ["about", "evolution", "work", "challenges", "patents", "next", "experience", "skills", "education", "resume", "contact"]
     .map($).filter(Boolean);
 
   var bar = document.createElement("div");
   bar.className = "rh__progress";
   rh.appendChild(bar);
+
+  // Coolant line: a pipe down the left margin that fills cold-to-hot as the
+  // page scrolls, with a readout running the site's own envelope, −10 to +55 °C.
+  var pipe = document.createElement("div");
+  pipe.className = "coolant";
+  pipe.setAttribute("aria-hidden", "true");
+  pipe.innerHTML = '<div class="coolant__fill"></div><div class="coolant__tip"><span></span></div>';
+  document.body.appendChild(pipe);
+  var pipeTip = pipe.querySelector(".coolant__tip"), pipeTemp = pipeTip.querySelector("span");
 
   // Same reasoning as the reveal engine: read positions directly rather than
   // trusting IntersectionObserver, which does not fire in every context.
@@ -573,13 +623,18 @@
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var pct = max > 0 ? window.scrollY / max : 0;
     bar.style.transform = "scaleX(" + Math.min(1, Math.max(0, pct)) + ")";
+    var p = Math.min(1, Math.max(0, pct));
+    pipe.style.setProperty("--p", p.toFixed(4));
+    var deg = Math.round(-10 + 65 * p);
+    pipeTemp.textContent = (deg > 0 ? "+" : deg < 0 ? "−" : "") + Math.abs(deg) + " °C";
 
     // The current section is the last one whose top has passed the running head.
     var current = null;
     sectionEls.forEach(function (el) {
       if (el.getBoundingClientRect().top <= 48) current = el;
     });
-    rhSec.textContent = current ? current.id : "";
+    var lab = current && current.querySelector(".sect__label");
+    rhSec.textContent = current ? (lab ? lab.textContent : current.id) : "";
   }
 
   var chromeTick = false;
