@@ -1,4 +1,12 @@
 (function () {
+  // Always open at the top: browsers restore the old scroll position on
+  // refresh (and honour #resume etc. left in the URL), which dropped
+  // visitors mid-page. In-page nav links still scroll as normal.
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  window.scrollTo(0, 0);
+  window.addEventListener("load", function () { window.scrollTo(0, 0); });
+
   "use strict";
   var S = window.SITE;
   if (!S) return;
@@ -596,7 +604,8 @@
 
   var bar = document.createElement("div");
   bar.className = "rh__progress";
-  rh.appendChild(bar);
+  // Not attached: the coolant line already shows scroll progress, so the
+  // acid rule under the running head was redundant (Prince, 2026-11-06).
 
   // Coolant line: a pipe down the left margin that fills cold-to-hot as the
   // page scrolls, with a readout running the site's own envelope, −10 to +55 °C.

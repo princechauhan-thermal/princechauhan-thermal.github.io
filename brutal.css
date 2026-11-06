@@ -245,3 +245,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .coolant__tip span { color: var(--acc); }
 .tick { color: var(--acc); }
 .chal-a .tick, .meta-item dd .tick { font-weight: 700; }
+
+/* No page scrollbar: the coolant line down the left is the scroll indicator. */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
