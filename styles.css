@@ -938,3 +938,15 @@ img { max-width: 100%; display: block; }
          transition: opacity .4s, transform .4s; }
 .toast.out { opacity: 0; transform: translate(-50%, 8px); }
 @media (max-width: 760px) { .masthead__tools { margin-top: 0; } }
+
+/* ---- Both edges straight on running text (matches the résumé) ----
+   Justified + hyphenated so it never opens wide gaps; last lines stay
+   left. Not on table cells or headings: narrow columns justify badly. */
+.about__p, .project__sentence, .next__p, .evo__line, .chal-envelope .lede__text, .contact__avail {
+  text-align: justify; text-align-last: left; hyphens: auto; -webkit-hyphens: auto;
+}
+/* Paragraph blocks fill their column, so the justified right edge lines up
+   with the tables and plates beside them instead of an arbitrary ch limit. */
+.about__p, .project__sentence, .next__p, .evo__line { max-width: none; }
+/* Big display lines read better ragged: justifying them opens gaps. */
+.about__p--lead { text-align: left; max-width: 40ch; }
