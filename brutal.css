@@ -249,3 +249,12 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 /* No page scrollbar: the coolant line down the left is the scroll indicator. */
 html { scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
+
+/* ---- Share + theme switch, brutalist ---- */
+.tool { font: 800 11.5px var(--font); text-transform: uppercase; letter-spacing: .06em; color: var(--ink);
+        padding: 7px 11px; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+        transition: transform .08s ease-out, box-shadow .08s ease-out, background .12s, color .12s; }
+.tool:hover { background: var(--acc); color: #000; border-color: var(--acc); }
+.tool:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
+#share-btn { background: var(--acc); color: #000; border-color: var(--acc); }
+.toast { background: var(--acc); color: #000; font: 600 12px var(--mono); border: 2px solid #000; box-shadow: 4px 4px 0 var(--ink); }

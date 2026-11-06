@@ -15,8 +15,8 @@ window.SITE = {
 
   // About me: the first thing on the page (Prince, 2026-11-06).
   about: [
-    "Thermal engineer at SUN Mobility since 2023, designing battery and charger thermal management (BTMS and CTMS) for battery-swap and fast-charging stations from 20 to 110 kWh.",
-    "I size cooling from heat-load first principles, prove it in the chamber and on site, and write the control logic that runs it."
+    "I build next-generation technology and the intelligent thermal systems that keep it running.",
+    "At SUN Mobility since 2023, that means battery and charger thermal management (BTMS and CTMS) for 20–110 kWh battery-swap and fast-charging stations: sized from heat-load first principles, proven in the chamber and on site, and run by control logic I write."
   ],
 
   // Challenges conquered: each row is a problem the hardware met and what

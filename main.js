@@ -50,7 +50,51 @@
         '<a href="#resume">Résumé</a>' +
         '<a href="#contact">Contact</a>' +
       '</nav>' +
+      '<div class="masthead__tools">' +
+        '<button class="tool" id="share-btn" type="button" aria-label="Share this portfolio">Share ↗</button>' +
+        '<button class="tool" id="theme-btn" type="button" aria-label="Switch light or dark mode"></button>' +
+      '</div>' +
     '</div>';
+
+  /* ---- Light / dark switch ----
+     Dark = the brutalist skin (brutal.css) on; light = it off, which is the
+     original Plate Set theme underneath. Remembered per browser. */
+  (function () {
+    var link = document.getElementById("theme-dark"), btn = document.getElementById("theme-btn");
+    if (!link || !btn) return;
+    function label() { btn.textContent = link.disabled ? "◐ Dark" : "◑ Light"; }
+    btn.addEventListener("click", function () {
+      link.disabled = !link.disabled;
+      try { localStorage.setItem("theme", link.disabled ? "light" : "dark"); } catch (e) {}
+      label();
+    });
+    label();
+  })();
+
+  /* ---- Share ----
+     Phones get the native share sheet (WhatsApp, LinkedIn, mail...); desktops
+     copy the link and say so. Always shares the canonical site URL. */
+  (function () {
+    var btn = document.getElementById("share-btn");
+    if (!btn) return;
+    var url = "https://princechauhan-thermal.github.io/";
+    var data = { title: "Prince Chauhan · Thermal Engineer",
+                 text: "Prince Chauhan, thermal engineer: battery and charger thermal systems, with an interactive 3D work portfolio.",
+                 url: url };
+    function toast(msg) {
+      var t = document.createElement("div");
+      t.className = "toast"; t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(function () { t.classList.add("out"); }, 1800);
+      setTimeout(function () { t.remove(); }, 2300);
+    }
+    btn.addEventListener("click", function () {
+      if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+      (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+        .then(function () { toast("Link copied: " + url); })
+        .catch(function () { toast("Share this link: " + url); });
+    });
+  })();
 
   /* ---- About me (top of the page) ----
      The operating-envelope line and its diagram used to open the page; they

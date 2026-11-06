@@ -34,9 +34,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=22">
+  <link rel="stylesheet" href="styles.css?v=23">
   <!-- Dark brutalist skin matching the CAD viewer. Remove this line to return to the light theme. -->
-  <link rel="stylesheet" href="brutal.css?v=5">
+  <link rel="stylesheet" href="brutal.css?v=6" id="theme-dark">
+  <script>
+    // Theme before first paint, so a light-mode visitor never sees a dark flash.
+    // Dark (brutalist) is the default; the choice is remembered per browser.
+    try { if (localStorage.getItem("theme") === "light") document.getElementById("theme-dark").disabled = true; } catch (e) {}
+  </script>
 </head>
 <body>
   <a class="skip" href="#work">Skip to work</a>
@@ -64,7 +69,7 @@
 
   <footer class="footer" id="footer"></footer>
 
-  <script src="data/content.js?v=21"></script>
-  <script src="main.js?v=25"></script>
+  <script src="data/content.js?v=22"></script>
+  <script src="main.js?v=26"></script>
 </body>
 </html>
