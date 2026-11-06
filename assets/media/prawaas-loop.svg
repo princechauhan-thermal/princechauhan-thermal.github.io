@@ -84,5 +84,5 @@
     <text x="616" y="493" font-size="11.5" fill="#82878c">temp &#183; flow &#183; power</text>
   </g>
 
-  <text x="40" y="118" font-family="ui-monospace, monospace" font-size="11" fill="#82878c">100+ back-to-back swaps validated</text>
+  <text x="40" y="118" font-family="ui-monospace, monospace" font-size="11" fill="#82878c">validated at 60 °C ambient</text>
 </svg>

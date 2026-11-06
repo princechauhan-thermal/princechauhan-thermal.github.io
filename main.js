@@ -528,7 +528,7 @@
   }
 
   /* ---- Number tickers ----
-     Counts in the outcomes (100+ swaps, ~18%, 25–35 °C, the 65 °C span)
+     Counts in the outcomes (~18%, 25–35 °C, the 65 °C span)
      run up from zero when their section is revealed. Only short integers
      in outcome text are wrapped: years and "Q3 FY2025" are left alone. */
   function prepTicks() {

@@ -22,7 +22,7 @@ window.SITE = {
   // Challenges conquered: each row is a problem the hardware met and what
   // came of it. Every claim is one already made in the projects below.
   challenges: [
-    { challenge: "Hold multi-pack batteries in their window through a supercharge at 50 °C ambient", outcome: "25–35 °C held · 100+ swaps · zero thermal faults" },
+    { challenge: "Hold multi-pack batteries in their window through a supercharge at 60 °C ambient", outcome: "25–35 °C held · zero thermal faults" },
     { challenge: "A supplied chiller delivering well under its rated capacity", outcome: "Caught by measurement; loop re-sized from first principles for ~18% lower thermal resistance" },
     { challenge: "Charger rectifiers derating above 50 °C, faster than their datasheet", outcome: "Found on test and fed back to the supplier" },
     { challenge: "Control logic that had to be right before any hardware existed", outcome: "Four-mode scheme verified on an ECU simulator; faults found pre-hardware" }
@@ -42,10 +42,10 @@ window.SITE = {
     {
       code: "TH-01",
       title: "Supercharge architecture",
-      sentence: "Held packs at 25–35 °C through a 110 kWh supercharge at peak-summer ambient — 100-plus swaps, no thermal fault.",
+      sentence: "Held packs at 25–35 °C through a 110 kWh supercharge at high ambient, 60 °C, with no thermal fault.",
       role: "System architecture, validation",
-      scale: "650 kg packs · 110 kWh · 50 °C",
-      outcome: "100+ swaps, zero faults",
+      scale: "650 kg packs · 110 kWh · 60 °C ambient",
+      outcome: "Zero thermal faults at 60 °C",
       year: "2024",
       figs: [
         { n: 1, src: "assets/media/prawaas-loop.svg", title: "Supercharge coolant loop", caption: "Coolant loop with DAQ instrumentation" }

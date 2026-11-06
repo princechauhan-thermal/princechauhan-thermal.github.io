@@ -141,7 +141,7 @@ import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const VERSIONS = [
   { id: "poc", name: "POC", cap: "V1 · 90 kWh", roll: -90, packs: true, plain: ["electrical"], explodeGhost: { plumbing: 0 },
-    story: ["<b>Problem:</b> Packs and liquid-cooled chargers shared one rack, and both had to stay in their thermal window at peak-summer ambient.", "<b>Change:</b> First integrated BTMS + CTMS: a roof-mounted radiator, fan and pump unit feeding every charger and pack through one hose harness.", "<b>Result:</b> Proved the supercharge architecture: 100+ swaps, zero thermal faults."] },
+    story: ["<b>Problem:</b> Packs and liquid-cooled chargers shared one rack, and both had to stay in their thermal window at high ambient (60 °C).", "<b>Change:</b> First integrated BTMS + CTMS: a roof-mounted radiator, fan and pump unit feeding every charger and pack through one hose harness.", "<b>Result:</b> Proved the supercharge architecture at 60 °C ambient with zero thermal faults."] },
   { id: "prototype", name: "Prototype", cap: "V2 · 100 kWh", roll: 180, packs: true, plain: ["electrical"], explodeGhost: { plumbing: 0 },
     story: ["<b>Problem:</b> The POC loop was sized from supplier ratings, and the supplied chiller measured well under its rated capacity.", "<b>Change:</b> Re-sized the loop from heat-load first principles; dedicated BTMS unit beside the radiator on the top deck.", "<b>Result:</b> ~18% cut in thermal resistance."] },
   { id: "pilot", name: "Pilot", cap: "V3 · 110 kWh series", flip: true, plain: ["electrical"], axis: [0, 0, 1],
