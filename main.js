@@ -106,7 +106,7 @@
       '<div class="evo" id="evo">' +
         '<div class="evo__poster">' +
           '<div class="evo__kicker">Interactive 3D · block view</div>' +
-          '<div class="evo__title">TMS Evolution</div>' +
+          '<div class="evo__title">Work Portfolio</div>' +
           '<div class="evo__steps"><span>POC</span><i>→</i><span>Prototype</span><i>→</i><span>Pilot</span></div>' +
           '<p class="evo__line">The battery-swap rack thermal systems I designed, from proof of concept to pilot. ' +
             'Rotate, explode, and highlight the coolant routing, chargers and BTMS + CTMS unit.</p>' +
