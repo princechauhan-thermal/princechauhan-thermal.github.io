@@ -46,7 +46,7 @@
   h2 { display:flex; align-items:center; gap:8px; font:600 11px var(--mono); letter-spacing:.14em; text-transform:uppercase;
        color:var(--ink-45); margin-bottom:12px; }
   h2::before { content:""; width:8px; height:8px; background:var(--acc); }
-  .summary { font-size:16.5px; line-height:1.55; color:var(--ink); max-width:66ch; }
+  .summary { font-size:16.5px; line-height:1.55; color:var(--ink); }
   .job { border-top:2px solid var(--ink); padding-top:14px; margin-top:14px; }
   .job:first-of-type { border-top:0; padding-top:0; margin-top:0; }
   .job__head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 16px; align-items:baseline; }
@@ -56,41 +56,41 @@
   h3 { font:800 11.5px var(--sans); text-transform:uppercase; letter-spacing:.06em; color:var(--ink); margin:14px 0 6px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
   ul { list-style:none; }
   li { position:relative; padding-left:16px; margin:5px 0; color:var(--ink-70); }
-  li::before { content:""; position:absolute; left:0; top:.62em; width:6px; height:6px; background:var(--ink-45); }
+  li::before { content:""; position:absolute; left:0; top:.55em; width:6px; height:6px; background:var(--ink-45); }
   li b { color:var(--ink); font-weight:700; }
   .v3d { font:600 10px var(--mono); letter-spacing:.06em; text-transform:uppercase; color:#000; background:var(--acc);
          padding:2px 7px; text-decoration:none; white-space:nowrap; }
   .v3d:hover { outline:2px solid var(--ink); }
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:6px 28px; }
-  .kv { display:grid; grid-template-columns:150px 1fr; gap:4px 16px; font-size:14px; }
-  .kv dt { font:600 11px/1.9 var(--mono); text-transform:uppercase; letter-spacing:.06em; color:var(--ink-45); }
+  .kv { display:grid; grid-template-columns:150px 1fr; gap:6px 16px; font-size:14px; align-items:baseline; }
+  .kv dt { font:600 11px/1.4 var(--mono); text-transform:uppercase; letter-spacing:.06em; color:var(--ink-45); white-space:nowrap; }
   .kv dd { color:var(--ink-70); }
   .note { font:11.5px var(--mono); color:var(--ink-45); margin-top:6px; }
   @media (max-width:640px) { header.cv-head { grid-template-columns:1fr; } .qr { display:none; } .grid2, .kv { grid-template-columns:1fr; } }
 
   /* ---- Print: the PDF ---- */
-  @page { size:A4; margin:13mm 14mm; }
+  @page { size:A4; margin:8mm 12mm 7mm; }
   @media print {
     :root { --ink:#111; --ink-70:#2a2a2a; --ink-45:#666; --acc:#111; }
     html, body { background:#fff; }
-    body { font-size:9.6pt; line-height:1.38; }
+    body { font-size:8.6pt; line-height:1.25; }
     .bar, .screen-only { display:none !important; }
     .print-only { display:inline; }
     .sheet { max-width:none; padding:0; }
-    h1 { font-size:22pt; } .role { font-size:9pt; color:#111; }
+    h1 { font-size:20pt; } .role { font-size:8.6pt; color:#111; margin-top:4px; }
     .contact { font-size:8.4pt; margin-top:6px; }
     header.cv-head { padding-bottom:10px; border-bottom:1.5pt solid #111; }
     .qr img { width:68px; height:68px; padding:0; border:0; } .qr { width:72px; font-size:7pt; color:#444; }
-    section { margin-top:12px; break-inside:avoid-page; }
-    h2 { font-size:8pt; margin-bottom:6px; color:#111; } h2::before { background:#111; width:6px; height:6px; }
-    .summary { font-size:10pt; }
-    .job { border-top:1pt solid #111; padding-top:8px; margin-top:8px; }
+    section { margin-top:7px; }
+    h2 { font-size:8pt; margin-bottom:4px; color:#111; } h2::before { background:#111; width:6px; height:6px; }
+    .summary { font-size:8.9pt; line-height:1.34; }
+    .job { border-top:1pt solid #111; padding-top:6px; margin-top:6px; }
     .job__title { font-size:10.5pt; } .job__when, .job__where { font-size:8.4pt; color:#333; }
-    h3 { font-size:8.4pt; margin:8px 0 3px; break-after:avoid; }
-    li { margin:2px 0; padding-left:11px; color:#222; } li::before { width:4px; height:4px; background:#555; top:.6em; }
+    h3 { font-size:8pt; margin:6px 0 2px; break-after:avoid; }
+    li { margin:1px 0; padding-left:10px; color:#222; } li::before { width:4px; height:4px; background:#555; top:.52em; }
     li { break-inside:avoid; }
     .v3d { background:none; color:#111; border:0.8pt solid #111; padding:0 4px; font-size:6.8pt; }
-    .kv { font-size:9pt; grid-template-columns:120px 1fr; } .kv dt { font-size:7.6pt; line-height:1.7; }
+    .kv { font-size:8.6pt; grid-template-columns:112px 1fr; gap:3px 12px; } .kv dt { font-size:7.4pt; line-height:1.3; }
     a { text-decoration:underline; text-decoration-color:#999; }
   }
 </style>
@@ -130,9 +130,9 @@
     <h2>Summary</h2>
     <p class="summary">Thermal engineer with 3+ years designing liquid- and air-cooled thermal management for battery-swap
       and fast-charging stations from 20 to 110 kWh, holding packs inside a 25–35 °C window at ambient temperatures up
-      to 55 °C. Work runs the full path: first-principles heat-load estimation, coolant-loop sizing, radiator and chiller
-      selection against ΔT budgets, chamber and field validation, and the control logic that runs it. Four patent
-      applications filed. Working towards intelligent, data-driven thermal systems and spacecraft thermal control.</p>
+      to 55 °C: first-principles heat-load estimation, coolant-loop sizing, radiator and chiller selection against ΔT
+      budgets, chamber and field validation, and the control logic that runs it. Four patent applications filed.
+      Working towards intelligent, data-driven thermal systems and spacecraft thermal control.</p>
   </section>
 
   <section>
@@ -173,7 +173,7 @@
       <h3>Air-cooled chargers</h3>
       <ul>
         <li>Air-cooled charging station, taken from proof of concept to station design: <b>Best Team Award</b>
-          (Air-cool station &amp; POC team, Q3 FY2025–26).</li>
+          (Air-cool station &amp; POC team, <span style="white-space:nowrap">Q3 FY2025–26</span>).</li>
       </ul>
     </div>
 
@@ -194,7 +194,7 @@
       <li><b>IN 202441065106</b> · Thermal management of energy storage devices · filed</li>
       <li>Two further applications filed (2025): dynamic compressor-speed control for battery thermal systems, and
         reinforcement-learning-based liquid cooling control.</li>
-      <li><b>InvenZone Award 2025</b> (IP contribution) · <b>Best Team Award</b>, SUN Mobility (Q3 FY2025–26)</li>
+      <li><b>InvenZone Award 2025</b> (IP contribution) · <b>Best Team Award</b>, SUN Mobility (<span style="white-space:nowrap">Q3 FY2025–26</span>)</li>
     </ul>
   </section>
 
@@ -204,25 +204,23 @@
       <dt>Thermal design</dt><dd>BTMS · CTMS · heat-load estimation · coolant-loop sizing · radiator/chiller selection · thermal-runaway prevention · multi-scale modelling (cell / pack / station)</dd>
       <dt>Simulation</dt><dd>ANSYS Fluent (CFD) · Siemens NX Space Systems Thermal · Flow Simulation · SolidWorks · PTC Creo · FEA</dd>
       <dt>Test &amp; validation</dt><dd>Chamber testing (−10 to 60 °C) · RTD / thermocouple calibration · IR thermography · DAQ · DOE · RCA · supplier qualification</dd>
-      <dt>Control &amp; embedded</dt><dd>Thermal state machines · ECU simulation · alert &amp; safety logic · CAN 2.0 · real-time monitoring</dd>
+      <dt>Controls</dt><dd>Thermal state machines · ECU simulation · alert &amp; safety logic · CAN 2.0 · real-time monitoring</dd>
     </dl>
   </section>
 
   <section>
     <h2>Spacecraft thermal</h2>
     <ul>
-      <li>Satellite thermal-control design study (self-directed): radiator sizing against a hot-case load, battery
-        cold-case survival through eclipse with heater sizing, and an optical-bench gradient analysis.</li>
-      <li>Eight-part public technical series on satellite thermal architecture, with ten original diagrams.</li>
+      <li>Self-directed satellite thermal-control study (hot-case radiator sizing, eclipse cold-case heater sizing,
+        optical-bench gradients) and an eight-part public series on satellite thermal architecture.</li>
     </ul>
   </section>
 
   <section>
     <h2>Education &amp; certifications</h2>
     <dl class="kv">
-      <dt>2022</dt><dd>B.E., Automobile Engineering · LJIET, Gujarat (heat transfer, thermodynamics, fluid mechanics)</dd>
-      <dt>Certifications</dt><dd>Astronautics &amp; Human Spaceflight (MITx) · Electric Vehicle Technology (DelftX) · Solar Energy Systems (DelftX) · Machine Learning (Coursera) · IBM Data Science (Coursera)</dd>
-      <dt>Earlier</dt><dd>3 kW solar-tree system (2022–23): ~50% cost and ~80% footprint vs a fixed array</dd>
+      <dt>Degree</dt><dd>2022 · B.E., Automobile Engineering · LJIET, Gujarat · project: 3 kW solar tree (~50% cost, ~80% footprint vs a fixed array)</dd>
+      <dt>Certifications</dt><dd>MITx Astronautics &amp; Human Spaceflight · DelftX EV Technology · DelftX Solar Energy · Coursera ML · IBM Data Science</dd>
     </dl>
     <p class="note screen-only">Every "View in 3D" link opens the matching stage of the interactive viewer. Block view: design features hidden to keep the work confidential.</p>
   </section>
