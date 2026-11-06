@@ -950,3 +950,17 @@ img { max-width: 100%; display: block; }
 .about__p, .project__sentence, .next__p, .evo__line { max-width: none; }
 /* Big display lines read better ragged: justifying them opens gaps. */
 .about__p--lead { text-align: left; max-width: 40ch; }
+
+/* ---- Nudge: the main portfolio button wiggles briefly every few seconds ---- */
+@keyframes evo-nudge {
+  0%, 84%, 100% { rotate: 0deg; scale: 1; }
+  86% { rotate: -3deg; scale: 1.04; }
+  88% { rotate: 3deg;  scale: 1.04; }
+  90% { rotate: -2deg; scale: 1.03; }
+  92% { rotate: 2deg;  scale: 1.02; }
+  94% { rotate: -1deg; scale: 1.01; }
+  96% { rotate: 0deg;  scale: 1; }
+}
+.evo__btn--nudge { animation: evo-nudge 4.5s ease-in-out 1.5s infinite; }
+.evo__btn--nudge:hover, .evo__btn--nudge:focus-visible { animation-play-state: paused; rotate: 0deg; scale: 1; }
+@media (prefers-reduced-motion: reduce) { .evo__btn--nudge { animation: none; } }

@@ -163,7 +163,7 @@
           '<p class="evo__line">The battery-swap rack thermal systems I designed, from proof of concept to pilot. ' +
             'Rotate, explode, and highlight the coolant routing, chargers and BTMS + CTMS unit.</p>' +
           '<div class="evo__actions">' +
-            '<button class="evo__btn" id="evo-load" type="button">View work portfolio</button>' +
+            '<button class="evo__btn evo__btn--nudge" id="evo-load" type="button">View work portfolio</button>' +
             '<a class="evo__btn evo__btn--ghost" href="viewer/" target="_blank" rel="noopener">Open full screen</a>' +
           '</div>' +
           '<div class="evo__note">Block view: design features hidden to keep the work confidential. ~3 MB to start.</div>' +
