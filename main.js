@@ -330,17 +330,8 @@
           '<div class="plate__caption">' + P.caption + '</div>';
         grid.appendChild(fig);
       }
-      // A 36px face in the running head rides the whole scroll, so a reader who
-      // never reaches Contact still sees there is a person behind the sheets.
-      var rhLeft = document.querySelector(".rh__left");
-      if (rhLeft && !rhLeft.querySelector("img")) {
-        var thumb = document.createElement("img");
-        thumb.className = "rh__face";
-        thumb.src = ver(P.src);
-        thumb.alt = "";
-        thumb.setAttribute("aria-hidden", "true");
-        rhLeft.insertBefore(thumb, rhLeft.firstChild);
-      }
+      // The running head carries the name only: Prince asked for the face
+      // thumbnail to go (2026-11-06). The portrait stays at Contact.
     };
     probe.src = ver(P.src);
   })();
