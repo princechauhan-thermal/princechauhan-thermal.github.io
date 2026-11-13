@@ -157,6 +157,12 @@
     '<div class="sect__body reveal">' +
       '<div class="evo" id="evo">' +
         '<div class="evo__poster">' +
+          '<button class="evo__shot" id="evo-shot" type="button" aria-label="Open the interactive 3D work portfolio">' +
+            '<img src="assets/media/portfolio-preview.jpg" width="880" height="816" loading="lazy" ' +
+              'alt="Block view of the POC battery-swap rack: BTMS and CTMS cooling unit on top, chargers in red, battery packs in purple">' +
+            '<span class="evo__play">▶ Explore in 3D</span>' +
+          '</button>' +
+          '<div class="evo__text">' +
           '<div class="evo__kicker">Interactive 3D · block view</div>' +
           '<div class="evo__title">Work Portfolio</div>' +
           '<div class="evo__steps"><span>POC</span><i>→</i><span>Prototype</span><i>→</i><span>Pilot</span></div>' +
@@ -167,15 +173,18 @@
             '<a class="evo__btn evo__btn--ghost" href="viewer/" target="_blank" rel="noopener">Open full screen</a>' +
           '</div>' +
           '<div class="evo__note">Block view: design features hidden to keep the work confidential. ~3 MB to start.</div>' +
+          '</div>' +
         '</div>' +
       '</div>' +
     '</div>';
-  document.getElementById("evo-load").addEventListener("click", function () {
+  function loadViewer() {
     var box = document.getElementById("evo");
     box.innerHTML = '<iframe class="evo__frame" src="viewer/" title="Work portfolio: TMS evolution, interactive 3D" ' +
       'allow="fullscreen" loading="eager"></iframe>' +
       '<a class="evo__full" href="viewer/" target="_blank" rel="noopener">Open full screen ↗</a>';
-  });
+  }
+  document.getElementById("evo-load").addEventListener("click", loadViewer);
+  document.getElementById("evo-shot").addEventListener("click", loadViewer);
 
   /* ---- Work ---- */
   function figLinks(figs) {

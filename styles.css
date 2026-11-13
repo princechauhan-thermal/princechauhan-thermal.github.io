@@ -964,3 +964,16 @@ img { max-width: 100%; display: block; }
 .evo__btn--nudge { animation: evo-nudge 4.5s ease-in-out 1.5s infinite; }
 .evo__btn--nudge:hover, .evo__btn--nudge:focus-visible { animation-play-state: paused; rotate: 0deg; scale: 1; }
 @media (prefers-reduced-motion: reduce) { .evo__btn--nudge { animation: none; } }
+
+/* ---- Preview still: shows the model before the 3D loads ---- */
+.evo__poster { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 32px; align-items: center; }
+.evo__shot { order: 2; position: relative; display: block; padding: 0; border: 1px solid var(--ink-20);
+             background: #0b0c0d; cursor: pointer; overflow: hidden; }
+.evo__shot img { display: block; width: 100%; height: auto; transition: transform .4s ease-out; }
+.evo__shot:hover img, .evo__shot:focus-visible img { transform: scale(1.03); }
+.evo__play { position: absolute; left: 12px; bottom: 12px; padding: 6px 10px; font: 800 11px var(--mono, monospace);
+             letter-spacing: .06em; text-transform: uppercase; background: var(--acc, #e4ff1a); color: #000; }
+@media (max-width: 760px) {
+  .evo__poster { grid-template-columns: 1fr; gap: 20px; }
+  .evo__shot { order: 0; }
+}
