@@ -30,7 +30,7 @@
   <!-- heat to air -->
   <path d="M 712 250 H 762" fill="none" stroke="#82878c" stroke-width="3" marker-end="url(#aG)"/>
   <path d="M 918 250 H 950" fill="none" stroke="#82878c" stroke-width="3" marker-end="url(#aG)"/>
-  <text x="915" y="352" font-family="ui-monospace, monospace" font-size="11" fill="#82878c" text-anchor="end">to ambient ~50 &#176;C</text>
+  <text x="915" y="352" font-family="ui-monospace, monospace" font-size="11" fill="#82878c" text-anchor="end">to ambient ~60 &#176;C</text>
 
   <!-- pack -->
   <g>

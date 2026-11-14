@@ -62,7 +62,7 @@ def variant_a():
     d.line([(x0, y - 30), (x0, y + 30)], fill=INK20, width=2)
     d.line([(x1, y - 34), (x1, y + 34)], fill=RED, width=6)
     d.text((x0 - 6, y + 36), "-10 °C", font=fs, fill=INK45)
-    d.text((x1 - 78, y + 36), "+55 °C", font=fs, fill=INK45)
+    d.text((x1 - 78, y + 36), "+60 °C", font=fs, fill=INK45)
     url_mark(d)
     return b
 
@@ -107,7 +107,7 @@ def variant_c():
     b, d = ground()
     fb = f("arialbd.ttf", 84)
     fs = f(MONO, 19)
-    txt_l, txt_r = "-10", "+55 °C"
+    txt_l, txt_r = "-10", "+60 °C"
     wl = d.textlength(txt_l, font=fb)
     wr = d.textlength(txt_r, font=fb)
     gap = 150                              # room for the arrow between them

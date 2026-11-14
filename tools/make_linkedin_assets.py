@@ -87,11 +87,11 @@ d.polygon([(x0, y), (x0 + 16, y - 9), (x0 + 16, y + 9)], fill=INK)
 d.polygon([(x1, y), (x1 - 16, y - 9), (x1 - 16, y + 9)], fill=INK)
 d.line([(x0, y - 26), (x0, y + 26)], fill=INK20, width=2)
 d.line([(x1, y - 26), (x1, y + 26)], fill=INK20, width=2)
-# the single red mark: the +55 C design limit
+# the single red mark: the +60 C design limit
 d.line([(x1, y - 30), (x1, y + 30)], fill=CORRECTION, width=5)
 
 d.text((x0 - 4, y + 30), "-10 \u00b0C", font=f_mono, fill=INK45)
-d.text((x1 - 66, y + 30), "+55 \u00b0C", font=f_mono, fill=INK45)
+d.text((x1 - 66, y + 30), "+60 \u00b0C", font=f_mono, fill=INK45)
 
 # --- measurement scale along the base -----------------------------------------
 # Fills the lower band with something that means something rather than padding,

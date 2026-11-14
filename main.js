@@ -588,7 +588,7 @@
   }
 
   /* ---- Number tickers ----
-     Counts in the outcomes (~18%, 25–35 °C, the 65 °C span)
+     Counts in the outcomes (25–35 °C, the 70 °C span)
      run up from zero when their section is revealed. Only short integers
      in outcome text are wrapped: years and "Q3 FY2025" are left alone. */
   function prepTicks() {
@@ -669,7 +669,7 @@
   // acid rule under the running head was redundant (Prince, 2026-11-06).
 
   // Coolant line: a pipe down the left margin that fills cold-to-hot as the
-  // page scrolls, with a readout running the site's own envelope, −10 to +55 °C.
+  // page scrolls, with a readout running the site's own envelope, −10 to +60 °C.
   var pipe = document.createElement("div");
   pipe.className = "coolant";
   pipe.setAttribute("aria-hidden", "true");
@@ -688,7 +688,7 @@
     bar.style.transform = "scaleX(" + Math.min(1, Math.max(0, pct)) + ")";
     var p = Math.min(1, Math.max(0, pct));
     pipe.style.setProperty("--p", p.toFixed(4));
-    var deg = Math.round(-10 + 65 * p);
+    var deg = Math.round(-10 + 70 * p);
     pipeTemp.textContent = (deg > 0 ? "+" : deg < 0 ? "−" : "") + Math.abs(deg) + " °C";
 
     // The current section is the last one whose top has passed the running head.

@@ -8,9 +8,9 @@ window.SITE = {
     resume: "cv/Prince_Chauhan_CV.pdf",   // printed from cv/ (the web résumé)
     cv: "cv/",
     lede: [
-      "Liquid-cooled battery and charger systems holding multi-pack platforms in their window from −10 to 55 °C, at supercharge rates."
+      "Liquid-cooled battery and charger systems holding multi-pack platforms in their window from −10 to 60 °C, at supercharge rates."
     ],
-    envelope: { low: "−10 °C", high: "+55 °C", span: "65 °C" }
+    envelope: { low: "−10 °C", high: "+60 °C", span: "70 °C" }
   },
 
   // About me: the first thing on the page (Prince, 2026-11-06).
@@ -23,7 +23,7 @@ window.SITE = {
   // came of it. Every claim is one already made in the projects below.
   challenges: [
     { challenge: "Hold multi-pack batteries in their window through a supercharge at 60 °C ambient", outcome: "25–35 °C held · zero thermal faults" },
-    { challenge: "A supplied chiller delivering well under its rated capacity", outcome: "Caught by measurement; loop re-sized from first principles for ~18% lower thermal resistance" },
+    { challenge: "A supplied chiller delivering well under its rated capacity", outcome: "Caught by measurement; loop re-sized from first principles" },
     { challenge: "Charger rectifiers derating above 50 °C, faster than their datasheet", outcome: "Found on test and fed back to the supplier" },
     { challenge: "Control logic that had to be right before any hardware existed", outcome: "Four-mode scheme verified on an ECU simulator; faults found pre-hardware" }
   ],
@@ -42,9 +42,9 @@ window.SITE = {
     {
       code: "TH-01",
       title: "Supercharge architecture",
-      sentence: "Held packs at 25–35 °C through a 110 kWh supercharge at high ambient, 60 °C, with no thermal fault.",
+      sentence: "Held packs at 25–35 °C through 90 and 110 kWh supercharges at high ambient, 60 °C, with no thermal fault.",
       role: "System architecture, validation",
-      scale: "650 kg packs · 110 kWh · 60 °C ambient",
+      scale: "650 kg packs · 90–110 kWh · 60 °C ambient",
       outcome: "Zero thermal faults at 60 °C",
       year: "2024",
       figs: [
@@ -56,8 +56,8 @@ window.SITE = {
       title: "Liquid-cooled charger & battery",
       sentence: "One coolant-loop architecture for battery packs and charger rectifiers, sized from heat-load first principles; testing caught a chiller under its rated capacity and rectifiers derating early above 50 °C.",
       role: "Thermal design, loop sizing, supplier validation",
-      scale: "20–110 kWh · −10 to 55 °C",
-      outcome: "~18% thermal-resistance cut",
+      scale: "20–110 kWh · −10 to 60 °C",
+      outcome: "Chiller shortfall caught on test",
       year: "2023–2025",
       figs: [
         { n: 2, src: "assets/media/architecture-loop.svg", title: "BTMS/CTMS architecture", caption: "Platform coolant-loop topology" },
@@ -92,11 +92,11 @@ window.SITE = {
   ],
 
   earlier: [
-    { title: "Formula Bharat chassis optimisation", clause: "National win, chassis FEA, 15% mass cut", year: "2018–2022" },
-    { title: "3 kW solar-tree system", clause: "~50% cost, ~80% footprint vs fixed array", year: "2022–2023" }
+    { title: "Formula Bharat chassis optimisation", clause: "National win, chassis FEA, 15% vehicle-weight cut", year: "2018–2022" },
+    { title: "3 kW solar-tree system", clause: "~50% cost, ~80% footprint vs fixed array", year: "2023" }
   ],
 
-  // Straight from the résumé. There is no 2022–23 employment row: the solar-tree
+  // Straight from the résumé. There is no 2023 employment row: the solar-tree
   // build was an independent project and is listed under Earlier, not here.
   experience: [
     { year: "2023–present", role: "Thermal engineer", org: "SUN Mobility", place: "Electric Vehicles Dept · Bengaluru" },

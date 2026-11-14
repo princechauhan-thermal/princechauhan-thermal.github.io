@@ -3,7 +3,7 @@
 This is the only part of the site that reaches someone who never opens the link —
 it is what renders in a LinkedIn post, a Slack paste or a forwarded email. It
 follows the page's own rules: paper ground, one hairline, ink type, and the single
-red accent used exactly once, on the +55 deg C limit tick.
+red accent used exactly once, on the +60 deg C limit tick.
 
 Runs with or without the portrait; the face is added when the file exists.
 """
@@ -76,7 +76,7 @@ d.polygon([(x0, y), (x0 + 13, y - 7), (x0 + 13, y + 7)], fill=INK)
 d.polygon([(x1, y), (x1 - 13, y - 7), (x1 - 13, y + 7)], fill=INK)
 d.line([(x1, y - 14), (x1, y + 14)], fill=CORRECTION, width=4)   # the one accent
 d.text((x0, y + 22), "\u221210 \u00b0C", font=f_mono, fill=INK45)
-d.text((x1 - 76, y + 22), "+55 \u00b0C", font=f_mono, fill=INK45)
+d.text((x1 - 76, y + 22), "+60 \u00b0C", font=f_mono, fill=INK45)
 
 d.text((text_x, 492), "Liquid-cooled battery & charger systems", font=f_small, fill=INK)
 
