@@ -48,7 +48,7 @@ window.SITE = {
       outcome: "Zero thermal faults at 60 °C",
       year: "2024",
       figs: [
-        { n: 1, src: "assets/media/prawaas-loop.svg", title: "Supercharge coolant loop", caption: "Coolant loop with DAQ instrumentation" }
+        { n: 1, src: "assets/media/supercharge-loop.svg", title: "Supercharge coolant loop", caption: "Coolant loop with DAQ instrumentation" }
       ]
     },
     {
@@ -79,7 +79,7 @@ window.SITE = {
     },
     {
       code: "TH-04",
-      title: "Control systems & SORs",
+      title: "Control systems & system requirements (SORs)",
       sentence: "The governing spec and a four-mode control scheme, verified against an ECU simulator before hardware.",
       role: "Spec owner, simulator author",
       scale: "BTMS + CTMS · CAN 2.0",

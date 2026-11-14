@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prince Chauhan — Thermal Engineer · Résumé</title>
 <meta name="description" content="Résumé of Prince Chauhan, thermal engineer: battery and charger thermal management for 20–110 kWh swap and fast-charging stations, with interactive 3D of the work.">
+<link rel="icon" href="../assets/media/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Prince Chauhan — Résumé">
+<meta property="og:description" content="Résumé of Prince Chauhan, thermal engineer: battery and charger thermal management for 20–110 kWh swap and fast-charging stations, with interactive 3D of the work.">
+<meta property="og:url" content="https://princechauhan-thermal.github.io/cv/">
+<meta property="og:image" content="https://princechauhan-thermal.github.io/assets/media/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://princechauhan-thermal.github.io/assets/media/og-card.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -118,9 +128,10 @@
       <div class="contact">
         Bengaluru, India ·
         <a href="mailto:princechauhan92652@gmail.com">princechauhan92652@gmail.com</a>
-        <!-- Phone only in the printed/PDF copy: kept out of the page itself so
-             it is not trivially scraped. Prince's PDF already carries it. -->
-        <span class="print-only"> · +91-9265212936</span><br>
+        <!-- Phone only in the printed/PDF copy. Assembled by script so the
+             number is not sitting in the HTML source for scrapers. -->
+        <span class="print-only" id="ph"></span><br>
+        <script>document.getElementById("ph").textContent = " · +91-" + ["92652", "12936"].join("");</script>
         <a href="https://www.linkedin.com/in/prince-chauhan-470031166/">linkedin.com/in/prince-chauhan-470031166</a> ·
         <a href="https://princechauhan-thermal.github.io/">princechauhan-thermal.github.io</a>
       </div>
@@ -197,8 +208,7 @@
     <ul>
       <li><b>IN 202441065103</b> · Thermal management of chargers · filed</li>
       <li><b>IN 202441065106</b> · Thermal management of energy storage devices · filed</li>
-      <li>Two further applications filed (2025): dynamic compressor-speed control for battery thermal systems, and
-        reinforcement-learning-based liquid cooling control.</li>
+      <li>Two further applications filed (2025)</li>
       <li><b>InvenZone Award 2025</b> (IP contribution) · <b>Best Team Award</b>, SUN Mobility (<span style="white-space:nowrap">Q3 FY2025–26</span>)</li>
     </ul>
   </section>

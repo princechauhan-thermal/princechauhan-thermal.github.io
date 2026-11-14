@@ -58,11 +58,11 @@ Six SVGs, re-inked from the old dark theme to black-on-white line art:
 
 | Fig. | File | On |
 |---|---|---|
-| 1 | `prawaas-loop.svg` | TH-01 |
+| 1 | `supercharge-loop.svg` | TH-01 |
 | 2 | `architecture-loop.svg` | TH-02 |
 | 3 | `btms-capacity.svg` | TH-02 |
-| 4 | `ctms-loop.svg` | TH-03 |
-| 5 | `rectifier-derating.svg` | TH-03 |
+| 4 | `ctms-loop.svg` | TH-02 |
+| 5 | `rectifier-derating.svg` | TH-02 |
 | 6 | `sor-states.svg` | TH-04 |
 
 On the three loop plates colour carries the domain's own convention:
@@ -173,7 +173,7 @@ Contact would otherwise never see a person at all.
 `index.html` carries og:/twitter: tags for the link preview card
 (`assets/media/og-card.jpg`). **Both `og:url` and `og:image` must be absolute
 URLs on the real deploy host** — they are set to the live Pages origin.
-If the site ever moves (custom domain, different host), update all three tags
+If the site ever moves (custom domain, different host), update every absolute-URL tag in index.html, cv/index.html and viewer/index.html
 or the preview breaks silently.
 A relative path renders no preview image at all, silently. This card is the only
 part of the site that reaches someone who never opens the link, so it matters

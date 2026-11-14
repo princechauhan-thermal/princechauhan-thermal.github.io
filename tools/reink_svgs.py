@@ -116,6 +116,6 @@ def reink(name):
     print(f"{name:26} hot={hot}  cold={cold}  fans={fan}")
 
 
-for n in ["prawaas-loop.svg", "architecture-loop.svg", "ctms-loop.svg",
+for n in ["supercharge-loop.svg", "architecture-loop.svg", "ctms-loop.svg",
           "sor-states.svg", "btms-capacity.svg", "rectifier-derating.svg"]:
     reink(n)

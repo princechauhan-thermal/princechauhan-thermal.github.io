@@ -2,10 +2,18 @@
   // Always open at the top: browsers restore the old scroll position on
   // refresh (and honour #resume etc. left in the URL), which dropped
   // visitors mid-page. In-page nav links still scroll as normal.
+  // A shared deep link (QR code, PDF "View in 3D", #evolution) is honoured on
+  // first arrival; only a refresh drops the hash and returns to the top.
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
-  window.scrollTo(0, 0);
-  window.addEventListener("load", function () { window.scrollTo(0, 0); });
+  var navEntry = performance.getEntriesByType ? performance.getEntriesByType("navigation")[0] : null;
+  var deepLink = !!location.hash && !(navEntry && navEntry.type === "reload");
+  if (deepLink) {
+    window.addEventListener("load", function () { handleHash(); });
+  } else {
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    window.scrollTo(0, 0);
+    window.addEventListener("load", function () { window.scrollTo(0, 0); });
+  }
 
   "use strict";
   var S = window.SITE;
@@ -52,7 +60,7 @@
       '</nav>' +
       '<div class="masthead__tools">' +
         '<button class="tool" id="share-btn" type="button" aria-label="Share this portfolio">Share ↗</button>' +
-        '<button class="tool" id="theme-btn" type="button" aria-label="Switch light or dark mode"></button>' +
+        '<button class="tool" id="theme-btn" type="button" title="Switch light or dark mode"></button>' +
       '</div>' +
     '</div>';
 
@@ -302,7 +310,7 @@
     '<div class="sect__label">Patents</div>' +
     '<div class="sect__body reveal">' +
       '<table class="patents-table"><thead><tr>' +
-        '<th>Pub. No.</th><th>Title</th><th>Status</th>' +
+        '<th>Application No.</th><th>Title</th><th>Status</th>' +
       '</tr></thead><tbody>' + patRows + '</tbody></table>' +
       '<p class="award-line">' + S.patentNote + '</p>' +
       '<div class="award-label">Recognition</div>' +
